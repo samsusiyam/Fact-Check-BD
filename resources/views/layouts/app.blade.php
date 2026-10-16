@@ -8,10 +8,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', $siteName)</title>
+    <title>@yield('title', $siteName . ' - ' . $tagline)</title>
+    <link rel="canonical" href="{{ url()->current() }}">
+    <meta name="theme-color" content="#111111">
+    <meta name="description" content="@yield('meta_description', $settings->meta_description_bn ?? $tagline)">
 
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content="{{ $siteName }}">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="@yield('meta_title', $siteName . ' - ' . $tagline)">
+    <meta property="og:description" content="@yield('meta_description', $settings->meta_description_bn ?? $tagline)">
+    <meta property="og:image" content="@yield('og_image', !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png'))">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@yield('meta_title', $siteName . ' - ' . $tagline)">
+    <meta name="twitter:description" content="@yield('meta_description', $settings->meta_description_bn ?? $tagline)">
+    <meta name="twitter:image" content="@yield('og_image', !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png'))">
+
+    <!-- Favicon & Icons -->
     @if(!empty($settings->favicon))
         <link rel="icon" type="image/png" href="{{ asset('storage/' . $settings->favicon) }}">
+        <link rel="apple-touch-icon" href="{{ asset('storage/' . $settings->favicon) }}">
+    @else
+        <link rel="icon" type="image/png" href="{{ asset('storage/branding/logo.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('storage/branding/logo.png') }}">
     @endif
 
     <!-- Fonts -->
@@ -277,6 +299,24 @@
         .desktop-nav a.active {
             color: #B3261E;
             border-bottom-color: #B3261E;
+        }
+
+        /* Keyboard Accessibility: Focus-visible states */
+        .desktop-nav a:focus-visible {
+            outline: 2px solid #B3261E !important;
+            outline-offset: 4px !important;
+            color: #B3261E !important;
+            border-bottom-color: #B3261E !important;
+        }
+        .desktop-claim-btn:focus-visible,
+        .desktop-search-btn:focus-visible,
+        .desktop-lang-btn:focus-visible,
+        .mobile-hamburger-btn:focus-visible,
+        .mobile-nav-item:focus-visible,
+        .mobile-drawer-close-btn:focus-visible,
+        .top-announcement-close:focus-visible {
+            outline: 2px solid #B3261E !important;
+            outline-offset: 2px !important;
         }
 
         /* Right Side: Search, Lang Toggle, Claim Button */

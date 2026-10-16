@@ -1,8 +1,22 @@
 @extends('layouts.app')
 
-@section('content')
 @php
     use App\Helpers\BnHelper;
+    $lang = app()->getLocale();
+    $title = $lang === 'en' && $post->title_en ? $post->title_en : $post->title_bn;
+    $siteName = $settings->site_name_bn ?? 'ফ্যাক্টচেক বাংলাদেশ';
+    $postExcerpt = $post->excerpt_bn ?: $post->claim_text_bn ?: strip_tags($post->content_bn);
+    $featImg = $post->getFirstMediaUrl('featured_image') ?: asset('storage/branding/logo.png');
+@endphp
+
+@section('title', Str::limit($title, 48) . ' | ' . $siteName)
+@section('meta_title', Str::limit($title, 55) . ' | ' . $siteName)
+@section('meta_description', Str::limit(strip_tags($postExcerpt), 150))
+@section('og_image', $featImg)
+@section('og_type', 'article')
+
+@section('content')
+@php
     $lang = app()->getLocale();
     $title = $lang === 'en' && $post->title_en ? $post->title_en : $post->title_bn;
     $claim = $lang === 'en' && $post->claim_text_en ? $post->claim_text_en : $post->claim_text_bn;
