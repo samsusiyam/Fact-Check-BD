@@ -62,13 +62,15 @@
 
         /* Top Bar Announcement */
         .top-announcement {
-            background: #111;
-            color: #FFF;
+            background: #111111;
+            color: #FFFFFF;
             font-family: var(--font-ui);
-            font-size: 13px;
-            padding: 9px 0;
-            border-bottom: 1px solid #222;
+            font-size: 12.5px;
+            padding: 10px 16px;
+            border-bottom: 1px solid #222222;
             text-align: center;
+            line-height: 1.55;
+            box-sizing: border-box;
         }
         .top-announcement a {
             color: #FACC15;
@@ -101,7 +103,7 @@
         }
 
         .site-logo-img {
-            max-height: 48px !important;
+            max-height: 64px !important;
             width: auto !important;
             display: block !important;
             margin: 0 auto !important;
@@ -354,7 +356,7 @@
         }
 
         .site-logo-img {
-            max-height: 48px !important;
+            max-height: 64px !important;
             width: auto !important;
             display: block !important;
             margin: 0 auto !important;
