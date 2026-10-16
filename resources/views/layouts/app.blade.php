@@ -233,8 +233,8 @@
         }
 
         .desktop-logo-img {
-            height: 48px;
-            max-height: 50px;
+            height: 58px;
+            max-height: 60px;
             width: auto;
             display: block;
             object-fit: contain;
@@ -242,7 +242,7 @@
         }
 
         .site-header.header-scrolled .desktop-logo-img {
-            height: 40px;
+            height: 46px;
         }
 
         /* Desktop Nav: flex: 1, left-aligned */
@@ -481,7 +481,7 @@
            ------------------------------------------------------------- */
         @media (max-width: 767px) {
             .site-header {
-                height: 64px !important;
+                height: 72px !important;
                 padding: 0 !important;
                 margin: 0 !important;
                 position: sticky !important;
@@ -496,7 +496,7 @@
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
-                height: 64px !important;
+                height: 72px !important;
                 padding: 0 16px !important;
                 width: 100% !important;
                 box-sizing: border-box !important;
@@ -510,9 +510,9 @@
                 flex-shrink: 0 !important;
             }
             .mobile-logo-img {
-                height: 40px !important;
-                max-height: 42px !important;
-                min-height: 38px !important;
+                height: 48px !important;
+                max-height: 52px !important;
+                min-height: 46px !important;
                 width: auto !important;
                 display: block !important;
                 object-fit: contain !important;
@@ -771,19 +771,31 @@
                 margin: 0 !important;
                 width: 100% !important;
             }
+            .top-announcement-inner {
+                height: auto !important;
+                min-height: 38px !important;
+                padding: 9px 48px 9px 14px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                position: relative !important;
+                box-sizing: border-box !important;
+            }
             .top-announcement-close {
                 position: absolute !important;
-                right: 0 !important;
-                top: 0 !important;
+                right: 4px !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
                 width: 44px !important;
-                height: 100% !important;
+                height: 44px !important;
                 min-width: 44px !important;
                 min-height: 44px !important;
                 display: inline-flex !important;
                 align-items: center !important;
                 justify-content: center !important;
-                font-size: 22px !important;
-                color: #888888 !important;
+                font-size: 24px !important;
+                line-height: 1 !important;
+                color: #A0AEC0 !important;
                 background: transparent !important;
                 border: none !important;
                 padding: 0 !important;
@@ -1091,17 +1103,6 @@
                     <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="mobile-lang-btn">ENG</button>
                 </div>
             </div>
-
-            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="mobile-drawer-whatsapp notranslate" title="WhatsApp Tipline">
-                <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 22px;"></i>
-                <span>হোয়াটসঅ্যাপ টিপলাইন (WhatsApp)</span>
-            </a>
-
-            <a href="/submit-claim" onclick="toggleDrawer()" class="mobile-drawer-claim-btn notranslate">
-                দাবি পাঠান (Submit Claim) &rarr;
-            </a>
-        </div>
-    </div>
 
             <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="mobile-drawer-whatsapp notranslate" title="WhatsApp Tipline">
                 <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 22px;"></i>
