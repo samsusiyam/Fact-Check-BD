@@ -8,6 +8,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Support\Facades\Storage;
 
 class BrandingSettingsPage extends Page
 {
@@ -42,28 +43,37 @@ class BrandingSettingsPage extends Page
                             ->image()
                             ->disk('public')
                             ->directory('branding')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->maxSize(15360) // 15MB
+                            ->storeFileNamesIn('original_filename_logo')
+                            ->dehydrated(true),
 
                         FileUpload::make('logo_dark')
                             ->label('Dark Mode Logo (Optional)')
                             ->image()
                             ->disk('public')
                             ->directory('branding')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->maxSize(15360)
+                            ->dehydrated(true),
 
                         FileUpload::make('favicon')
                             ->label('Favicon')
                             ->image()
                             ->disk('public')
                             ->directory('branding')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->maxSize(5120)
+                            ->dehydrated(true),
 
                         FileUpload::make('default_og_image')
                             ->label('Default Social Share Image (1200x630)')
                             ->image()
                             ->disk('public')
                             ->directory('branding')
-                            ->visibility('public'),
+                            ->visibility('public')
+                            ->maxSize(15360)
+                            ->dehydrated(true),
                     ])->columns(2),
             ])
             ->statePath('data');
@@ -73,13 +83,15 @@ class BrandingSettingsPage extends Page
     {
         $state = $this->form->getState();
 
-        // If an array is returned by FileUpload, pick the first file path or string
         foreach (['logo_light', 'logo_dark', 'favicon', 'default_og_image'] as $field) {
-            if (isset($state[$field])) {
+            if (array_key_exists($field, $state)) {
                 $val = $state[$field];
+                
+                // If Filament returns an array of uploaded files
                 if (is_array($val)) {
-                    $val = array_values($val)[0] ?? null;
+                    $val = reset($val) ?: null;
                 }
+
                 if (!empty($val)) {
                     $settings->{$field} = (string) $val;
                 }
@@ -88,7 +100,7 @@ class BrandingSettingsPage extends Page
 
         $settings->save();
 
-        // Refill form with fresh saved data so it never disappears from view!
+        // Refresh form state so the image preview persists
         $this->form->fill([
             'logo_light' => $settings->logo_light,
             'logo_dark' => $settings->logo_dark,
@@ -96,6 +108,6 @@ class BrandingSettingsPage extends Page
             'default_og_image' => $settings->default_og_image,
         ]);
 
-        Notification::make()->title('Branding updated and saved successfully!')->success()->send();
+        Notification::make()->title('Branding updated successfully!')->success()->send();
     }
 }
