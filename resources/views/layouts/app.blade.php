@@ -301,10 +301,11 @@
             }
         }
     
-        /* EXACT SCREENSHOT HEADER MATCH */
+        
+        /* EXACT SCREENSHOT HEADER & SUB-HEADER FIX */
         .site-header {
             background: #FFFFFF !important;
-            padding: 16px 0 14px 0 !important;
+            padding: 16px 0 16px 0 !important;
             border-bottom: 1px solid #E5E7EB !important;
         }
 
@@ -342,14 +343,16 @@
             text-align: center !important;
         }
 
-        /* Controls row directly under tagline */
+        /* Controls row with generous top spacing and no tight line */
         .header-controls-row {
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
             width: 100% !important;
-            margin-top: 18px !important;
-            padding: 0 4px !important;
+            margin-top: 22px !important;
+            padding-top: 16px !important;
+            border-top: 1px solid #E5E7EB !important;
+            box-sizing: border-box !important;
         }
 
         /* Segmented Pill Language Switcher */
@@ -365,10 +368,10 @@
         .lang-pill {
             background: transparent !important;
             border: none !important;
-            padding: 4px 10px !important;
+            padding: 5px 12px !important;
             border-radius: 4px !important;
             font-family: var(--font-ui) !important;
-            font-size: 12.5px !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             color: #4B5563 !important;
             cursor: pointer !important;
@@ -378,7 +381,7 @@
         .lang-pill.active {
             background: #FFFFFF !important;
             color: #DC2626 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
         }
 
         .lang-pill-divider {
@@ -388,31 +391,33 @@
             margin: 0 1px;
         }
 
-        /* WhatsApp Button */
+        /* WhatsApp Outline Button (Matching Screenshot exactly) */
         .whatsapp-icon-btn {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            width: 32px !important;
-            height: 32px !important;
+            width: 34px !important;
+            height: 34px !important;
             color: #25D366 !important;
             text-decoration: none !important;
             flex-shrink: 0 !important;
+            background: transparent !important;
         }
 
-        /* Mobile Hamburger Toggle */
+        /* Mobile Hamburger Toggle (White square with thin light-gray border) */
         .mobile-toggle-btn {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            width: 36px !important;
-            height: 36px !important;
+            width: 40px !important;
+            height: 40px !important;
             background: #FFFFFF !important;
-            border: 1px solid #E5E7EB !important;
+            border: 1px solid #D1D5DB !important;
             border-radius: 6px !important;
             cursor: pointer !important;
             padding: 0 !important;
             color: #111827 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
         }
 
         @media (min-width: 992px) {
@@ -421,7 +426,7 @@
             }
         }
 
-</style>
+    </style>
 
     
     <!-- Google Translate Integration -->
@@ -436,10 +441,11 @@
         .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
         #google_translate_element, .skiptranslate { display: none !important; }
     
-        /* EXACT SCREENSHOT HEADER MATCH */
+        
+        /* EXACT SCREENSHOT HEADER & SUB-HEADER FIX */
         .site-header {
             background: #FFFFFF !important;
-            padding: 16px 0 14px 0 !important;
+            padding: 16px 0 16px 0 !important;
             border-bottom: 1px solid #E5E7EB !important;
         }
 
@@ -477,14 +483,16 @@
             text-align: center !important;
         }
 
-        /* Controls row directly under tagline */
+        /* Controls row with generous top spacing and no tight line */
         .header-controls-row {
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
             width: 100% !important;
-            margin-top: 18px !important;
-            padding: 0 4px !important;
+            margin-top: 22px !important;
+            padding-top: 16px !important;
+            border-top: 1px solid #E5E7EB !important;
+            box-sizing: border-box !important;
         }
 
         /* Segmented Pill Language Switcher */
@@ -500,10 +508,10 @@
         .lang-pill {
             background: transparent !important;
             border: none !important;
-            padding: 4px 10px !important;
+            padding: 5px 12px !important;
             border-radius: 4px !important;
             font-family: var(--font-ui) !important;
-            font-size: 12.5px !important;
+            font-size: 13px !important;
             font-weight: 700 !important;
             color: #4B5563 !important;
             cursor: pointer !important;
@@ -513,7 +521,7 @@
         .lang-pill.active {
             background: #FFFFFF !important;
             color: #DC2626 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
         }
 
         .lang-pill-divider {
@@ -523,31 +531,33 @@
             margin: 0 1px;
         }
 
-        /* WhatsApp Button */
+        /* WhatsApp Outline Button (Matching Screenshot exactly) */
         .whatsapp-icon-btn {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            width: 32px !important;
-            height: 32px !important;
+            width: 34px !important;
+            height: 34px !important;
             color: #25D366 !important;
             text-decoration: none !important;
             flex-shrink: 0 !important;
+            background: transparent !important;
         }
 
-        /* Mobile Hamburger Toggle */
+        /* Mobile Hamburger Toggle (White square with thin light-gray border) */
         .mobile-toggle-btn {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
-            width: 36px !important;
-            height: 36px !important;
+            width: 40px !important;
+            height: 40px !important;
             background: #FFFFFF !important;
-            border: 1px solid #E5E7EB !important;
+            border: 1px solid #D1D5DB !important;
             border-radius: 6px !important;
             cursor: pointer !important;
             padding: 0 !important;
             color: #111827 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
         }
 
         @media (min-width: 992px) {
@@ -556,7 +566,7 @@
             }
         }
 
-</style>
+    </style>
     <div id="google_translate_element" style="display:none;"></div>
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -660,13 +670,20 @@
 
                         <!-- WhatsApp Icon (Clean outline SVG) -->
                         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn" title="WhatsApp Tipline">
-                            <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.57 20.16 9.12 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16Z"/></svg>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#25D366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M16.5 14.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.2.2 2 3.1 5 4.3.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.5z" fill="#25D366"></path>
+                            </svg>
                         </a>
                     </div>
 
                     <!-- Right: Hamburger Menu Button (Clean 3-bar box) -->
                     <button type="button" class="mobile-toggle-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                            <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
                     </button>
                 </div>
             </div>
