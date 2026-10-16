@@ -475,14 +475,46 @@
             }, 'google_translate_element');
         }
 
+        function getGoogTrans() {
+            var name = "googtrans=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i].trim();
+                if (c.indexOf(name) === 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function syncLanguagePills() {
+            var gt = getGoogTrans();
+            var isEn = gt && (gt.indexOf('/en') !== -1 || gt.indexOf('en') !== -1);
+            var btnBn = document.getElementById('btn-lang-bn');
+            var btnEn = document.getElementById('btn-lang-en');
+            if (btnBn && btnEn) {
+                if (isEn) {
+                    btnEn.classList.add('active');
+                    btnBn.classList.remove('active');
+                } else {
+                    btnBn.classList.add('active');
+                    btnEn.classList.remove('active');
+                }
+            }
+        }
+
         function switchSiteLanguage(lang) {
+            var host = window.location.hostname;
+            var btnBn = document.getElementById('btn-lang-bn');
+            var btnEn = document.getElementById('btn-lang-en');
+
             if (lang === 'bn') {
-                // Clear all possible cookies across all domain paths
-                var host = window.location.hostname;
-                var domainParts = host.split('.');
+                if (btnBn && btnEn) {
+                    btnBn.classList.add('active');
+                    btnEn.classList.remove('active');
+                }
                 var paths = ['/', '/page', '/article', '/category'];
-                
-                // Clear googtrans
                 ['googtrans', '__googtrans'].forEach(function(cName) {
                     paths.forEach(function(p) {
                         document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + ';';
@@ -490,20 +522,19 @@
                         document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=.' + host + ';';
                     });
                 });
-                
-                // Direct DOM revert if Google Combo is present
                 var select = document.querySelector('#google_translate_element select');
                 if (select) {
                     select.value = 'bn';
                     select.dispatchEvent(new Event('change'));
                 }
-                
-                // Force reload clean
                 setTimeout(function() {
                     window.location.href = window.location.pathname;
                 }, 100);
             } else if (lang === 'en') {
-                var host = window.location.hostname;
+                if (btnBn && btnEn) {
+                    btnEn.classList.add('active');
+                    btnBn.classList.remove('active');
+                }
                 document.cookie = "googtrans=/bn/en; path=/; domain=" + host;
                 document.cookie = "googtrans=/bn/en; path=/; domain=." + host;
                 document.cookie = "googtrans=/bn/en; path=/;";
@@ -512,27 +543,16 @@
                 if (select) {
                     select.value = 'en';
                     select.dispatchEvent(new Event('change'));
-                } else {
-                    window.location.reload();
                 }
+                setTimeout(function() {
+                    window.location.reload();
+                }, 100);
             }
         }
-    
-        document.addEventListener('DOMContentLoaded', function() {
-            var isEnglish = document.cookie.indexOf('googtrans=/bn/en') !== -1;
-            var btnBn = document.getElementById('btn-lang-bn');
-            var btnEn = document.getElementById('btn-lang-en');
-            if (btnBn && btnEn) {
-                if (isEnglish) {
-                    btnEn.classList.add('active');
-                    btnBn.classList.remove('active');
-                } else {
-                    btnBn.classList.add('active');
-                    btnEn.classList.remove('active');
-                }
-            }
-        });
 
+        document.addEventListener('DOMContentLoaded', syncLanguagePills);
+        window.addEventListener('load', syncLanguagePills);
+        setInterval(syncLanguagePills, 400);
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
@@ -560,18 +580,15 @@
                 <div class="header-controls-row">
                     <!-- Left: Language Pill & WhatsApp -->
                     <div style="display: flex; align-items: center; gap: 12px;">
-                        <div class="lang-pill-wrap" title="Switch Language / ভাষা পরিবর্তন">
+                        <div class="lang-pill-wrap notranslate" translate="no" title="Switch Language / ভাষা পরিবর্তন">
                             <button type="button" id="btn-lang-bn" onclick="switchSiteLanguage('bn')" class="lang-pill">বাংলা</button>
                             <span class="lang-pill-divider"></span>
                             <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
                         </div>
 
-                        <!-- WhatsApp Icon (Clean outline SVG) -->
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn" title="WhatsApp Tipline">
-                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="#25D366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path>
-                                <path d="M16.5 14.5c-.3-.2-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.4-1.5-.9-.8-1.5-1.7-1.7-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1 2.9 1.2 3.1c.2.2 2 3.1 5 4.3.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.5z" fill="#25D366"></path>
-                            </svg>
+                        <!-- WhatsApp Icon (Official Image) -->
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline">
+                            <img src="{{ asset('storage/branding/whatsapp.png') }}" alt="WhatsApp" style="width: 34px !important; height: 34px !important; border-radius: 50% !important; display: block !important; object-fit: cover !important;">
                         </a>
                     </div>
 
