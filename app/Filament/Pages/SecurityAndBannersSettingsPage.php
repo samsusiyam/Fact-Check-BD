@@ -17,7 +17,7 @@ class SecurityAndBannersSettingsPage extends Page
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Banners & Security';
     protected static ?string $title = 'Alerts, Cookies & Anti-Spam (Turnstile)';
-    protected static ?int $navigationSort = 6;
+    protected static ?int $navigationSort = 7;
     protected static string $view = 'filament.pages.manage-site-settings';
 
     public ?array $data = [];

@@ -156,7 +156,7 @@ Route::post('/submit-claim', function (Request $request) {
         $attachmentPath = $request->file('attachment')->store('claims', 'public');
     }
 
-    Claim::create([
+    $claim = Claim::create([
         'claim_text' => $validated['claim_text'],
         'claim_url' => $validated['claim_url'] ?? null,
         'submitter_name' => $validated['submitter_name'] ?? null,
@@ -165,6 +165,23 @@ Route::post('/submit-claim', function (Request $request) {
         'ip_address' => $request->ip(),
         'status' => 'pending',
     ]);
+
+    // Dual Mail Notifications (Admin alert + Submitter confirmation)
+    try {
+        \App\Services\MailConfigService::applySettings();
+        $settings = app(\App\Settings\SiteSettings::class);
+        $adminEmail = $settings->notification_recipient_email ?: ($settings->contact_email ?: config('mail.from.address'));
+
+        if (!empty($adminEmail)) {
+            \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\NewClaimAdminMail($claim));
+        }
+
+        if (!empty($claim->submitter_email)) {
+            \Illuminate\Support\Facades\Mail::to($claim->submitter_email)->send(new \App\Mail\ClaimReceivedSubmitterMail($claim));
+        }
+    } catch (\Throwable $e) {
+        \Illuminate\Support\Facades\Log::error('Claim notification mail failed: ' . $e->getMessage());
+    }
 
     $lang = session('app_locale', 'bn');
     $msg = $lang === 'en' 

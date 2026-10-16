@@ -16,7 +16,7 @@ class SeoSettingsPage extends Page
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'SEO & Webmaster';
     protected static ?string $title = 'Search Engine Optimization & Webmaster Keys';
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 6;
     protected static string $view = 'filament.pages.manage-site-settings';
 
     public ?array $data = [];

@@ -17,7 +17,7 @@ class SocialChannelsSettingsPage extends Page
     protected static ?string $navigationGroup = 'Settings';
     protected static ?string $navigationLabel = 'Social Channels';
     protected static ?string $title = 'Social Media Profiles & Icons';
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 5;
     protected static string $view = 'filament.pages.manage-site-settings';
 
     public ?array $data = [];
