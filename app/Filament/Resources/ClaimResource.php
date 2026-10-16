@@ -147,31 +147,82 @@ class ClaimResource extends Resource
                     ->label('Create Fact-Check Draft')
                     ->icon('heroicon-o-document-plus')
                     ->color('success')
-                    ->requiresConfirmation()
-                    ->modalHeading('Convert Claim to Fact-Check Draft')
-                    ->modalDescription('This will create a new draft Fact-Check post with this claim details and link it to this submission.')
+                    ->modalHeading('Create Fact-Check Article Draft')
+                    ->modalDescription('Review the editorial details below. Clicking "Create & Open Draft" will initialize a structured newsroom draft and link it to this claim.')
+                    ->modalSubmitActionLabel('Create & Open Draft')
                     ->visible(fn (Claim $record): bool => is_null($record->post_id))
-                    ->action(function (Claim $record) {
-                        $category = Category::first();
+                    ->form([
+                        Forms\Components\TextInput::make('title_bn')
+                            ->label('Article Headline (বাংলা শিরোনাম)')
+                            ->helperText('A crisp, engaging newsroom headline investigating this claim.')
+                            ->default(function (Claim $record): string {
+                                $clean = trim(preg_replace('/\s+/', ' ', strip_tags($record->claim_text)));
+                                return 'ফ্যাক্ট-চেক: ' . Str::limit($clean, 65, '...');
+                            })
+                            ->required(),
+
+                        Forms\Components\Select::make('category_id')
+                            ->label('Newsroom Category')
+                            ->options(fn () => Category::pluck('name_bn', 'id'))
+                            ->default(fn () => Category::first()?->id)
+                            ->required(),
+
+                        Forms\Components\Select::make('verdict')
+                            ->label('Initial Editorial Verdict')
+                            ->options([
+                                'false' => 'False (ভুয়া)',
+                                'misleading' => 'Misleading (বিভ্রান্তিকর)',
+                                'true' => 'True (সত্য)',
+                                'ai_generated' => 'AI Generated / Deepfake',
+                                'unproven' => 'Unproven (প্রমাণহীন)',
+                            ])
+                            ->default('false')
+                            ->required(),
+
+                        Forms\Components\TextInput::make('claimant')
+                            ->label('Claim Origin / Platform')
+                            ->default('ভাইরাল সামাজিক যোগাযোগ মাধ্যম')
+                            ->required(),
+                    ])
+                    ->action(function (array $data, Claim $record) {
                         $user = auth()->user() ?? User::first();
-                        $titleBn = Str::limit($record->claim_text, 90, '');
-                        $uniqueSuffix = '-' . substr(md5(uniqid()), 0, 6);
-                        $slug = Str::slug($titleBn) . $uniqueSuffix;
-                        if (empty(trim(Str::slug($titleBn)))) {
-                            $slug = 'claim-investigation' . $uniqueSuffix;
+                        $titleBn = trim($data['title_bn']);
+                        
+                        // Clean, URL-safe slug
+                        $slugBase = Str::slug($titleBn);
+                        if (empty($slugBase) || strlen($slugBase) < 3) {
+                            $slugBase = 'fact-check-investigation';
                         }
+                        $slug = $slugBase . '-' . substr(md5(uniqid()), 0, 6);
+
+                        // Professional Newsroom Boilerplate Content
+                        $excerpt = 'সামাজিক যোগাযোগ মাধ্যমে সম্প্রতি ছড়িয়ে পড়া উক্ত দাবিটির সত্যতা যাচাই করেছে ফ্যাক্টচেক বাংলাদেশ। অনুসন্ধানে দাবিটি অসত্য ও বিভ্রান্তিকর প্রমাণিত হয়েছে।';
+                        
+                        $content = '<p>সম্প্রতি সামাজিক যোগাযোগ মাধ্যমে একটি দাবি বা গুজব ব্যাপকভাবে প্রচার হতে দেখা গেছে। জনস্বার্থে দাবিটির সত্যতা যাচাইয়ের উদ্যোগ নিয়েছে ফ্যাক্টচেক বাংলাদেশ নিউজরুম।</p>' .
+                            '<h3>দাবি ও প্রেক্ষাপট</h3>' .
+                            '<p>' . nl2br(e($record->claim_text)) . '</p>' .
+                            '<h3>অনুসন্ধান ও তথ্য যাচাই</h3>' .
+                            '<p>দাবিটির সত্যতা যাচাইয়ে আমাদের ফ্যাক্ট-চেক টিম সংশ্লিষ্ট তথ্যসূত্র, ডিজিটাল এভিডেন্স এবং প্রাসঙ্গিক রেকর্ড বিস্তারিত বিশ্লেষণ করেছে। অনুসন্ধানে দেখা যায়—</p>' .
+                            '<ul><li>দাবির সপক্ষে কোনো নির্ভরযোগ্য গণমাধ্যম বা প্রাতিষ্ঠানিক তথ্য পাওয়া যায়নি।</li><li>ছড়িয়ে পড়া পোস্টটি উদ্দেশ্যপ্রণোদিতভাবে প্রচার করা হচ্ছে।</li></ul>' .
+                            '<h3>চূড়ান্ত সিদ্ধান্ত</h3>' .
+                            '<p>সার্বিক তথ্য ও অনুসন্ধানের ভিত্তিতে উক্ত দাবিটিকে ফ্যাক্টচেক বাংলাদেশ কর্তৃক ভিত্তিহীন ও অসত্য হিসেবে চিহ্নিত করা হয়েছে।</p>';
+
+                        $steps = "১. দাবির সপক্ষে কোনো প্রাতিষ্ঠানিক বা নির্ভরযোগ্য সূত্রের সন্ধান পাওয়া যায়নি।\n২. ডিজিটাল ফ্যাক্ট-চেকিং ও আর্কাইভ বিশ্লেষণে দাবিটি সম্পূর্ণ অসত্য প্রতীয়মান হয়।";
 
                         $post = Post::create([
                             'user_id' => $user?->id,
-                            'category_id' => $category?->id,
+                            'category_id' => $data['category_id'],
                             'title_bn' => $titleBn,
-                            'title_en' => 'Fact-Check: ' . Str::limit($record->claim_text, 70, ''),
+                            'title_en' => 'Fact-Check: ' . Str::limit($titleBn, 65, ''),
                             'slug' => $slug,
+                            'excerpt_bn' => $excerpt,
+                            'content_bn' => $content,
                             'claim_text_bn' => $record->claim_text,
-                            'claim_text_en' => $record->claim_text,
-                            'claim_origin_bn' => $record->claim_url ?: 'পাঠকের সাবমিশন',
-                            'claim_date' => $record->created_at->format('Y-m-d'),
-                            'verdict' => 'false',
+                            'claim_origin_bn' => $data['claimant'] ?: ($record->claim_url ?: 'সামাজিক যোগাযোগ মাধ্যম'),
+                            'claim_claimant_bn' => $data['claimant'],
+                            'claim_date' => $record->created_at ? $record->created_at->format('Y-m-d') : date('Y-m-d'),
+                            'verdict' => $data['verdict'],
+                            'verification_steps_bn' => $steps,
                             'status' => 'draft',
                         ]);
 
@@ -181,7 +232,7 @@ class ClaimResource extends Resource
                         ]);
 
                         Notification::make()
-                            ->title('Fact-Check Draft created and linked successfully!')
+                            ->title('Fact-Check Draft created successfully!')
                             ->success()
                             ->send();
 
