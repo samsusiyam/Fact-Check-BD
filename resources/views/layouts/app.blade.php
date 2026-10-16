@@ -327,7 +327,8 @@
     </style>
 
     
-        <!-- Google Translate Script & Handler -->
+        
+    <!-- Google Translate Script & Bulletproof Engine -->
     <style>
         .goog-te-banner-frame, .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame { display: none !important; }
         body { top: 0px !important; position: static !important; }
@@ -346,24 +347,23 @@
         }
 
         function switchSiteLanguage(lang) {
-            var host = window.location.hostname;
             var btnBn = document.getElementById('btn-lang-bn');
             var btnEn = document.getElementById('btn-lang-en');
+            var host = window.location.hostname;
 
             if (lang === 'en') {
                 if (btnEn) btnEn.classList.add('active');
                 if (btnBn) btnBn.classList.remove('active');
 
-                // Set cookie across all domain scopes
-                var expires = new Date();
-                expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
-                var expStr = "; expires=" + expires.toUTCString();
-                document.cookie = "googtrans=/bn/en; path=/" + expStr;
-                document.cookie = "googtrans=/bn/en; path=/; domain=" + host + expStr;
-                document.cookie = "googtrans=/bn/en; path=/; domain=." + host + expStr;
+                // Set cookie
+                var d = new Date();
+                d.setTime(d.getTime() + (365*24*60*60*1000));
+                var exp = "; expires=" + d.toUTCString();
+                document.cookie = "googtrans=/bn/en; path=/; domain=" + host + exp;
+                document.cookie = "googtrans=/bn/en; path=/; domain=." + host + exp;
+                document.cookie = "googtrans=/bn/en; path=/" + exp;
 
-                // Fire combo change
-                var select = document.querySelector('#google_translate_element select');
+                var select = document.querySelector('.goog-te-combo');
                 if (select) {
                     select.value = 'en';
                     select.dispatchEvent(new Event('change'));
@@ -383,7 +383,7 @@
                     });
                 });
 
-                var select = document.querySelector('#google_translate_element select');
+                var select = document.querySelector('.goog-te-combo');
                 if (select) {
                     select.value = 'bn';
                     select.dispatchEvent(new Event('change'));
@@ -394,7 +394,7 @@
             }
         }
 
-        function checkActivePill() {
+        function syncActivePill() {
             var isEn = document.cookie.indexOf('googtrans=/bn/en') !== -1;
             var btnBn = document.getElementById('btn-lang-bn');
             var btnEn = document.getElementById('btn-lang-en');
@@ -408,10 +408,12 @@
                 }
             }
         }
-        document.addEventListener('DOMContentLoaded', checkActivePill);
-        window.addEventListener('load', checkActivePill);
+
+        document.addEventListener('DOMContentLoaded', syncActivePill);
+        window.addEventListener('load', syncActivePill);
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
 
 </head>
