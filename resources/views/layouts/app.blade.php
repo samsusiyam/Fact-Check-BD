@@ -1018,17 +1018,22 @@
             }
         }, { passive: true });
 
-        // Announcement dismissal via localStorage
+        // Announcement dismissal via sessionStorage (reappears next browser session)
         function checkAnnouncementDismissal() {
-            if (localStorage.getItem('fc_announcement_dismissed') === '1') {
-                var el = document.getElementById('topAnnouncementBar');
-                if (el) el.classList.add('dismissed');
-            }
+            try {
+                localStorage.removeItem('fc_announcement_dismissed'); // clear permanent legacy key
+                if (sessionStorage.getItem('fc_announcement_dismissed') === '1') {
+                    var el = document.getElementById('topAnnouncementBar');
+                    if (el) el.classList.add('dismissed');
+                }
+            } catch (e) {}
         }
         function dismissAnnouncement() {
             var el = document.getElementById('topAnnouncementBar');
             if (el) el.classList.add('dismissed');
-            localStorage.setItem('fc_announcement_dismissed', '1');
+            try {
+                sessionStorage.setItem('fc_announcement_dismissed', '1');
+            } catch (e) {}
         }
         document.addEventListener('DOMContentLoaded', checkAnnouncementDismissal);
 
