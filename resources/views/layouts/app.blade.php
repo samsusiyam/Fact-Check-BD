@@ -138,7 +138,23 @@
 
         @media (max-width: 767px) {
             .top-announcement {
-                display: none !important;
+                display: block !important;
+                height: auto !important;
+                max-height: none !important;
+            }
+            .top-announcement-inner {
+                height: auto !important;
+                padding: 7px 12px !important;
+            }
+            .top-announcement-text {
+                font-size: 11.5px !important;
+                line-height: 1.45 !important;
+                white-space: normal !important;
+                padding-right: 22px !important;
+            }
+            .top-announcement-close {
+                right: 8px !important;
+                font-size: 17px !important;
             }
         }
 
