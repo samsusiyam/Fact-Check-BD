@@ -22,7 +22,12 @@ class BrandingSettingsPage extends Page
 
     public function mount(SiteSettings $settings): void
     {
-        $this->form->fill($settings->toArray());
+        $this->form->fill([
+            'logo_light' => $settings->logo_light,
+            'logo_dark' => $settings->logo_dark,
+            'favicon' => $settings->favicon,
+            'default_og_image' => $settings->default_og_image,
+        ]);
     }
 
     public function form(Form $form): Form
@@ -30,38 +35,35 @@ class BrandingSettingsPage extends Page
         return $form
             ->schema([
                 Section::make('Logos & Visual Identity')
-                    ->description('Upload publication logos and favicons in SVG, PNG or WebP.')
+                    ->description('Upload publication logos and favicons. Uploaded files are stored directly in public storage.')
                     ->schema([
                         FileUpload::make('logo_light')
                             ->label('Primary Logo (Light / Canvas)')
                             ->image()
                             ->disk('public')
-                            ->visibility('public')
                             ->directory('branding')
-                            ->preserveFilenames()
-                            ->helperText('PNG/SVG recommended. Stored in public storage for instant display.'),
+                            ->visibility('public'),
+
                         FileUpload::make('logo_dark')
                             ->label('Dark Mode Logo (Optional)')
                             ->image()
                             ->disk('public')
-                            ->visibility('public')
                             ->directory('branding')
-                            ->preserveFilenames(),
+                            ->visibility('public'),
+
                         FileUpload::make('favicon')
                             ->label('Favicon')
                             ->image()
                             ->disk('public')
-                            ->visibility('public')
                             ->directory('branding')
-                            ->preserveFilenames()
-                            ->helperText('SVG or 32x32 PNG icon for browser tabs'),
+                            ->visibility('public'),
+
                         FileUpload::make('default_og_image')
                             ->label('Default Social Share Image (1200x630)')
                             ->image()
                             ->disk('public')
-                            ->visibility('public')
                             ->directory('branding')
-                            ->preserveFilenames(),
+                            ->visibility('public'),
                     ])->columns(2),
             ])
             ->statePath('data');
@@ -70,11 +72,11 @@ class BrandingSettingsPage extends Page
     public function save(SiteSettings $settings): void
     {
         $state = $this->form->getState();
-        foreach ($state as $key => $value) {
-            if (property_exists($settings, $key)) {
-                $settings->{$key} = $value;
-            }
-        }
+        
+        $settings->logo_light = $state['logo_light'] ?? $settings->logo_light;
+        $settings->logo_dark = $state['logo_dark'] ?? $settings->logo_dark;
+        $settings->favicon = $state['favicon'] ?? $settings->favicon;
+        $settings->default_og_image = $state['default_og_image'] ?? $settings->default_og_image;
         $settings->save();
 
         Notification::make()->title('Branding updated successfully')->success()->send();
