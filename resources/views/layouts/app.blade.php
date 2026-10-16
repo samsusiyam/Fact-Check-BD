@@ -430,7 +430,7 @@
             <div class="header-top">
                 <!-- Branding Logo Centered -->
                 <div class="site-branding">
-                    <a href="/"><img src="{{ asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="site-logo-img"></a>
+                    <a href="/"><img src="{{ !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="site-logo-img"></a>
                     <div class="site-tagline">Independent Fact-Checking & Digital Verification<br>Initiative in Bangladesh</div>
                 </div>
 
