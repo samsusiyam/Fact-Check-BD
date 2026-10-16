@@ -15,11 +15,13 @@
     @endif
 
     <!-- Fonts -->
+        <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Styles -->
+    <!-- Core Styles -->
     <style>
         :root {
             --bg-color: #FAFAF7;
@@ -33,13 +35,14 @@
 
         html, body {
             max-width: 100vw !important;
-            overflow-x: hidden !important;
+            overflow-x: clip !important;
             position: relative;
             background-color: var(--bg-color);
             color: var(--text-dark);
             font-family: var(--font-serif);
-            margin: 0;
-            padding: 0;
+            margin: 0 !important;
+            padding: 0 !important;
+            top: 0px !important;
             -webkit-font-smoothing: antialiased;
         }
 
@@ -60,41 +63,384 @@
             text-decoration: none;
         }
 
-        /* Top Bar Announcement */
-        
+        /* -------------------------------------------------------------
+           TOP ANNOUNCEMENT BAR
+           - Height max 36px, small text
+           - Dismissible via localStorage
+           - Hidden on mobile (<768px)
+           ------------------------------------------------------------- */
         .top-announcement {
             background: #111111;
             color: #FFFFFF;
             font-family: var(--font-ui);
             font-size: 12.5px;
-            padding: 10px 16px;
             border-bottom: 1px solid #222222;
-            text-align: center;
-            line-height: 1.5;
+            width: 100%;
+            height: 36px;
+            max-height: 36px;
             box-sizing: border-box;
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-            white-space: normal !important;
-            max-width: 100vw !important;
+            overflow: hidden;
+            display: block;
         }
+
+        .top-announcement.dismissed {
+            display: none !important;
+        }
+
+        .top-announcement-inner {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 16px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        .top-announcement-text {
+            text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            padding-right: 28px;
+            font-size: 12.5px;
+            line-height: 36px;
+        }
+
         .top-announcement a {
-            display: inline-block !important;
+            display: inline-block;
             color: #FACC15 !important;
             text-decoration: underline !important;
-            margin-left: 6px !important;
-            font-weight: 700 !important;
-            white-space: nowrap !important;
+            margin-left: 6px;
+            font-weight: 700;
         }
 
+        .top-announcement-close {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: #999999;
+            font-size: 19px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 4px 6px;
+            transition: color 0.15s ease;
+        }
 
-        /* Header Match */
+        .top-announcement-close:hover {
+            color: #FFFFFF;
+        }
+
+        @media (max-width: 767px) {
+            .top-announcement {
+                display: none !important;
+            }
+        }
+
+        /* -------------------------------------------------------------
+           SITE HEADER BASE (Sticky, no shadow, clean 1px border)
+           ------------------------------------------------------------- */
         .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
             background: #FFFFFF !important;
-            padding: 18px 0 16px 0 !important;
-            border-bottom: 1px solid #E5E7EB !important;
+            border-bottom: 1px solid #E5E5E0 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            box-shadow: none !important;
+            width: 100%;
         }
 
-        .header-top {
+        /* -------------------------------------------------------------
+           DESKTOP & TABLET HEADER (min-width: 768px)
+           Compact 1-row layout (64-72px, 56px when scrolled)
+           ------------------------------------------------------------- */
+        .desktop-header-wrap {
+            display: none; /* hidden on mobile */
+            align-items: center;
+            gap: 32px;
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 16px;
+            height: 68px;
+            box-sizing: border-box;
+            transition: height 0.2s ease;
+        }
+
+        .site-header.header-scrolled .desktop-header-wrap {
+            height: 56px;
+        }
+
+        .desktop-logo-link {
+            display: inline-flex;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .desktop-logo-img {
+            height: 38px;
+            max-height: 40px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+            transition: height 0.2s ease;
+        }
+
+        .site-header.header-scrolled .desktop-logo-img {
+            height: 32px;
+        }
+
+        /* Desktop Nav: flex: 1, left-aligned */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            flex: 1;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .desktop-nav a {
+            font-family: var(--font-ui);
+            font-size: 16px;
+            font-weight: 600;
+            color: #111111;
+            text-decoration: none;
+            padding: 0;
+            height: 100%;
+            display: inline-flex;
+            align-items: center;
+            border-bottom: 2px solid transparent;
+            transition: color 0.15s ease, border-color 0.15s ease;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
+            color: #B3261E;
+            border-bottom-color: #B3261E;
+        }
+
+        /* Right Side: Search, Lang Toggle, Claim Button */
+        .desktop-header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-left: auto;
+            flex-shrink: 0;
+            height: 100%;
+        }
+
+        /* Expandable Search Icon */
+        .desktop-search-wrap {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .desktop-search-btn {
+            background: transparent;
+            border: none;
+            padding: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: #111111;
+            border-radius: 2px;
+            transition: color 0.15s ease;
+        }
+
+        .desktop-search-btn:hover {
+            color: #B3261E;
+        }
+
+        .desktop-search-form {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #FFFFFF;
+            border: 1px solid #E5E5E0;
+            border-radius: 2px;
+            padding: 3px 8px 3px 12px;
+            align-items: center;
+            width: 260px;
+            z-index: 60;
+            box-sizing: border-box;
+        }
+
+        .desktop-search-form.open {
+            display: flex;
+        }
+
+        .desktop-search-input {
+            border: none;
+            outline: none;
+            background: transparent;
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            width: 100%;
+            padding: 5px 0;
+            color: #111111;
+        }
+
+        .desktop-search-close {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #777777;
+            padding: 0 4px;
+            line-height: 1;
+        }
+
+        .desktop-search-close:hover {
+            color: #111111;
+        }
+
+        /* Language Toggle: small, plain text style */
+        .desktop-lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #555555;
+            user-select: none;
+        }
+
+        .desk-lang-btn {
+            background: transparent;
+            border: none;
+            padding: 2px 2px;
+            font-family: var(--font-ui);
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #555555;
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .desk-lang-btn:hover {
+            color: #111111;
+        }
+
+        .desk-lang-btn.active {
+            color: #B3261E !important;
+            font-weight: 700 !important;
+        }
+
+        .desk-lang-sep {
+            color: #CCCCCC;
+            font-size: 12px;
+        }
+
+        /* "দাবি পাঠান" Button: 40px height, 1px border/solid accent, border-radius max 2px */
+        .desktop-claim-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 40px;
+            padding: 0 16px;
+            background: #B3261E;
+            color: #FFFFFF !important;
+            border: 1px solid #B3261E;
+            border-radius: 2px;
+            font-family: var(--font-ui);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            box-sizing: border-box;
+            transition: background 0.15s ease, border-color 0.15s ease, height 0.2s ease;
+        }
+
+        .site-header.header-scrolled .desktop-claim-btn {
+            height: 36px;
+        }
+
+        .desktop-claim-btn:hover {
+            background: #961F18;
+            border-color: #961F18;
+            color: #FFFFFF !important;
+        }
+
+        /* Tablet Hamburger Button (768px - 1023px) */
+        .tablet-hamburger-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            background: #FFFFFF;
+            border: 1px solid #D1D5DB;
+            border-radius: 2px;
+            cursor: pointer;
+            padding: 0;
+            color: #111111;
+        }
+
+        /* Breakpoints for Tablet & Desktop */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .desktop-header-wrap {
+                display: flex !important;
+                gap: 16px;
+            }
+            .desktop-nav {
+                display: none !important;
+            }
+            .tablet-hamburger-btn {
+                display: inline-flex !important;
+            }
+            .desktop-header-right {
+                gap: 14px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .desktop-header-wrap {
+                display: flex !important;
+            }
+            .desktop-nav {
+                display: flex !important;
+            }
+            .tablet-hamburger-btn {
+                display: none !important;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .mobile-header-wrap {
+                display: none !important;
+            }
+        }
+
+        /* -------------------------------------------------------------
+           MOBILE HEADER (<768px) — UNTOUCHED & IDENTICAL
+           ------------------------------------------------------------- */
+        @media (max-width: 767px) {
+            .desktop-header-wrap {
+                display: none !important;
+            }
+            .mobile-header-wrap {
+                display: block !important;
+                padding: 16px 0 14px 0;
+            }
+        }
+
+        .mobile-header-wrap .header-top {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -102,7 +448,7 @@
             width: 100%;
         }
 
-        .site-branding {
+        .mobile-header-wrap .site-branding {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -110,7 +456,7 @@
             width: 100%;
         }
 
-        .site-logo-img {
+        .mobile-header-wrap .site-logo-img {
             max-height: 85px !important;
             width: auto !important;
             display: block !important;
@@ -118,7 +464,7 @@
             object-fit: contain !important;
         }
 
-        .site-tagline {
+        .mobile-header-wrap .site-tagline {
             font-family: var(--font-ui) !important;
             font-size: 13px !important;
             color: #4B5563 !important;
@@ -128,8 +474,7 @@
             text-align: center !important;
         }
 
-        /* Sub Header / Control Row with comfortable spacing */
-        .header-controls-row {
+        .mobile-header-wrap .header-controls-row {
             display: flex !important;
             align-items: center !important;
             justify-content: space-between !important;
@@ -140,8 +485,7 @@
             box-sizing: border-box !important;
         }
 
-        /* Segmented Pill Language Switcher */
-        .lang-pill-wrap {
+        .mobile-header-wrap .lang-pill-wrap {
             display: inline-flex !important;
             align-items: center !important;
             background: #F3F4F6 !important;
@@ -150,7 +494,7 @@
             padding: 2px !important;
         }
 
-        .lang-pill {
+        .mobile-header-wrap .lang-pill {
             background: transparent !important;
             border: none !important;
             padding: 4px 11px !important;
@@ -163,21 +507,20 @@
             transition: all 0.15s ease !important;
         }
 
-        .lang-pill.active {
+        .mobile-header-wrap .lang-pill.active {
             background: #FFFFFF !important;
             color: #DC2626 !important;
             box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
         }
 
-        .lang-pill-divider {
+        .mobile-header-wrap .lang-pill-divider {
             width: 1px;
             height: 14px;
             background: #E5E7EB;
             margin: 0 1px;
         }
 
-        /* WhatsApp Outline Button */
-        .whatsapp-icon-btn {
+        .mobile-header-wrap .whatsapp-icon-btn {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -189,8 +532,7 @@
             background: transparent !important;
         }
 
-        /* Mobile Hamburger Toggle */
-        .mobile-toggle-btn {
+        .mobile-header-wrap .mobile-toggle-btn {
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -202,40 +544,6 @@
             cursor: pointer !important;
             padding: 0 !important;
             box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
-        }
-
-        /* Desktop Nav Menu */
-        .header-nav {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-            border-top: 1px solid var(--border-rule);
-            margin-top: 14px;
-            padding-top: 12px;
-            font-family: var(--font-ui);
-            font-size: 14.5px;
-            font-weight: 600;
-        }
-        .header-nav a {
-            padding: 4px 0;
-            border-bottom: 2px solid transparent;
-            color: var(--text-dark);
-        }
-        .header-nav a:hover {
-            border-bottom-color: var(--accent-red);
-            color: var(--accent-red);
-        }
-        .header-nav .search-box {
-            margin-left: auto;
-        }
-        .search-input {
-            border: 1px solid var(--border-rule);
-            padding: 6px 12px;
-            font-family: var(--font-ui);
-            font-size: 13px;
-            background: #FFF;
-            border-radius: 2px;
-            outline: none;
         }
 
         /* Mobile Drawer */
@@ -310,27 +618,13 @@
             font-size: 12.5px;
         }
 
-        /* Breakpoints */
         @media (max-width: 991px) {
-            .header-nav { display: none !important; }
-            .mobile-toggle-btn { display: inline-flex !important; }
             .footer-cols { grid-template-columns: 1fr; gap: 28px; }
             .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
             .home-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
         }
 
-        @media (min-width: 992px) {
-            .mobile-toggle-btn { display: none !important; }
-            .mobile-drawer { display: none !important; }
-            .mobile-drawer-overlay { display: none !important; }
-        }
-    </style>
-
-    
-        
-    
-    <!-- Hide Google Translate Banner Completely -->
-    <style>
+        /* Google Translate & Frame Clean Suppression */
         .goog-te-banner-frame, 
         .goog-te-banner-frame.skiptranslate, 
         iframe.goog-te-banner-frame,
@@ -338,23 +632,16 @@
         .VIpgJd-ZVi9od-aZ2wEe-wOHMyf,
         .VIpgJd-ZVi9od-aZ2wEe-wOHMyf-ti6hGc,
         #goog-gt-tt,
-        .goog-te-balloon-frame {
+        .goog-te-balloon-frame,
+        .skiptranslate,
+        iframe.skiptranslate,
+        body > .skiptranslate {
             display: none !important;
             visibility: hidden !important;
             height: 0 !important;
             width: 0 !important;
             opacity: 0 !important;
             pointer-events: none !important;
-        }
-
-        body {
-            top: 0px !important;
-            position: static !important;
-            transform: none !important;
-        }
-
-        .skiptranslate {
-            display: none !important;
         }
 
         .goog-tooltip, .goog-tooltip:hover {
@@ -372,158 +659,126 @@
             position: absolute !important;
             top: -9999px !important;
             left: -9999px !important;
+            height: 0 !important;
+            width: 0 !important;
         }
     </style>
-
-    <div id="google_translate_element"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'bn',
-                includedLanguages: 'en,bn',
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-
-        function switchSiteLanguage(lang) {
-            var btnBn = document.getElementById('btn-lang-bn');
-            var btnEn = document.getElementById('btn-lang-en');
-            var host = window.location.hostname;
-
-            if (lang === 'en') {
-                if (btnEn) btnEn.classList.add('active');
-                if (btnBn) btnBn.classList.remove('active');
-
-                // Set cookie
-                var d = new Date();
-                d.setTime(d.getTime() + (365*24*60*60*1000));
-                var exp = "; expires=" + d.toUTCString();
-                document.cookie = "googtrans=/bn/en; path=/; domain=" + host + exp;
-                document.cookie = "googtrans=/bn/en; path=/; domain=." + host + exp;
-                document.cookie = "googtrans=/bn/en; path=/" + exp;
-
-                var select = document.querySelector('.goog-te-combo');
-                if (select) {
-                    select.value = 'en';
-                    select.dispatchEvent(new Event('change'));
-                } else {
-                    window.location.reload();
-                }
-            } else {
-                if (btnBn) btnBn.classList.add('active');
-                if (btnEn) btnEn.classList.remove('active');
-
-                var paths = ['/', '/page', '/article', '/category'];
-                ['googtrans', '__googtrans'].forEach(function(cName) {
-                    paths.forEach(function(p) {
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + ';';
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=' + host + ';';
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=.' + host + ';';
-                    });
-                });
-
-                var select = document.querySelector('.goog-te-combo');
-                if (select) {
-                    select.value = 'bn';
-                    select.dispatchEvent(new Event('change'));
-                }
-                setTimeout(function() {
-                    window.location.href = window.location.pathname;
-                }, 100);
-            }
-        }
-
-        function syncActivePill() {
-            var isEn = document.cookie.indexOf('googtrans=/bn/en') !== -1;
-            var btnBn = document.getElementById('btn-lang-bn');
-            var btnEn = document.getElementById('btn-lang-en');
-            if (btnBn && btnEn) {
-                if (isEn) {
-                    btnEn.classList.add('active');
-                    btnBn.classList.remove('active');
-                } else {
-                    btnBn.classList.add('active');
-                    btnEn.classList.remove('active');
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', syncActivePill);
-        window.addEventListener('load', syncActivePill);
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     @if(!empty($settings->enable_announcement) && !empty($settings->announcement_text_bn))
-        <div class="top-announcement">
-            {{ $settings->announcement_text_bn }}
-            @if(!empty($settings->announcement_link))
-                <a href="{{ $settings->announcement_link }}">{{ $settings->announcement_link_text_bn ?? 'বিস্তারিত' }} &rarr;</a>
-            @endif
+        <div id="topAnnouncementBar" class="top-announcement">
+            <div class="top-announcement-inner">
+                <div class="top-announcement-text">
+                    {{ $settings->announcement_text_bn }}
+                    @if(!empty($settings->announcement_link))
+                        <a href="{{ $settings->announcement_link }}">{{ $settings->announcement_link_text_bn ?? 'বিস্তারিত' }} &rarr;</a>
+                    @endif
+                </div>
+                <button type="button" class="top-announcement-close" onclick="dismissAnnouncement()" aria-label="Dismiss Notice">&times;</button>
+            </div>
         </div>
     @endif
 
     <header class="site-header">
-        <div class="site-wrap">
-            <div class="header-top">
-                <!-- Branding Logo Centered -->
-                <div class="site-branding">
-                    <a href="/"><img src="{{ !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="site-logo-img"></a>
-                    <div class="site-tagline">Independent Fact-Checking & Digital Verification<br>Initiative in Bangladesh</div>
-                </div>
+        <!-- DESKTOP & TABLET HEADER (min-width: 768px) -->
+        <div class="desktop-header-wrap">
+            <!-- Left: Logo (36-40px height) -->
+            <a href="/" class="desktop-logo-link" title="{{ $siteName }}">
+                <img src="{{ !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="desktop-logo-img">
+            </a>
 
-                <!-- Controls Row: Left (Lang + WhatsApp), Right (Hamburger) -->
-                <div class="header-controls-row">
-                    <!-- Left: Language Pill & WhatsApp -->
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div class="lang-pill-wrap notranslate" translate="no" title="Switch Language / ভাষা পরিবর্তন">
-                            <button type="button" id="btn-lang-bn" onclick="switchSiteLanguage('bn')" class="lang-pill">বাংলা</button>
-                            <span class="lang-pill-divider"></span>
-                            <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
-                        </div>
+            <!-- Tablet Hamburger Toggle (768px - 1023px) -->
+            <button type="button" class="tablet-hamburger-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+            </button>
 
-                        <!-- WhatsApp Icon (FontAwesome Official) -->
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
-                            <i class="fa-brands fa-whatsapp" style="color: rgb(10, 113, 4); font-size: 27px; line-height: 1;"></i>
-                        </a>
-                    </div>
-
-                    <!-- Right: Hamburger Menu Button (Clean 3-bar box) -->
-                    <button type="button" class="mobile-toggle-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="4" y1="6" x2="20" y2="6"></line>
-                            <line x1="4" y1="12" x2="20" y2="12"></line>
-                            <line x1="4" y1="18" x2="20" y2="18"></line>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Desktop Nav Menu -->
-            <nav class="header-nav">
+            <!-- Desktop Nav (flex: 1, left-aligned) -->
+            <nav class="desktop-nav">
                 @if(!empty($settings->header_menu))
                     @foreach($settings->header_menu as $menu)
-                        <a href="{{ $menu['url'] }}">{{ $menu['label_bn'] }}</a>
+                        <a href="{{ $menu['url'] }}" class="{{ request()->is(ltrim($menu['url'], '/') . '*') ? 'active' : '' }}">{{ $menu['label_bn'] }}</a>
                     @endforeach
                 @else
-                    <a href="/">হোম</a>
-                    <a href="/category/politics">রাজনীতি</a>
-                    <a href="/category/health">স্বাস্থ্য</a>
-                    <a href="/category/ai-deepfake">ডিপফেক ও এআই</a>
-                    <a href="/page/about">আমাদের সম্পর্কে</a>
+                    <a href="/" class="{{ request()->is('/') ? 'active' : '' }}">হোম</a>
+                    <a href="/category/politics" class="{{ request()->is('category/politics*') ? 'active' : '' }}">রাজনীতি</a>
+                    <a href="/category/health" class="{{ request()->is('category/health*') ? 'active' : '' }}">স্বাস্থ্য</a>
+                    <a href="/category/ai-deepfake" class="{{ request()->is('category/ai-deepfake*') ? 'active' : '' }}">ডিপফেক ও এআই</a>
+                    <a href="/page/about" class="{{ request()->is('page/about*') ? 'active' : '' }}">আমাদের সম্পর্কে</a>
                 @endif
-                <div class="search-box">
-                    <form action="/search" method="GET" style="margin: 0; display: flex;">
-                        <input type="text" name="q" placeholder="অনুসন্ধান করুন..." class="search-input" value="{{ request('q') }}">
+            </nav>
+
+            <!-- Right: Search, Language Switcher, "দাবি পাঠান" button -->
+            <div class="desktop-header-right">
+                <!-- Search Icon with expandable input -->
+                <div class="desktop-search-wrap" id="desktopSearchWrap">
+                    <button type="button" class="desktop-search-btn" onclick="toggleDesktopSearch()" aria-label="অনুসন্ধান">
+                        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                    <form action="/search" method="GET" class="desktop-search-form" id="desktopSearchForm">
+                        <input type="text" name="q" placeholder="অনুসন্ধান করুন..." class="desktop-search-input" id="desktopSearchInput" value="{{ request('q') }}">
+                        <button type="button" class="desktop-search-close" onclick="toggleDesktopSearch()">&times;</button>
                     </form>
                 </div>
-            </nav>
+
+                <!-- Language Toggle: small, plain text style -->
+                <div class="desktop-lang-toggle notranslate" translate="no" title="Switch Language / ভাষা পরিবর্তন">
+                    <button type="button" id="desk-btn-lang-bn" onclick="switchSiteLanguage('bn')" class="desk-lang-btn active">বাংলা</button>
+                    <span class="desk-lang-sep">|</span>
+                    <button type="button" id="desk-btn-lang-en" onclick="switchSiteLanguage('en')" class="desk-lang-btn">ENG</button>
+                </div>
+
+                <!-- "দাবি পাঠান" Button (40px height, 1px border/solid accent, border-radius max 2px) -->
+                <a href="/submit-claim" class="desktop-claim-btn notranslate">দাবি পাঠান</a>
+            </div>
+        </div>
+
+        <!-- MOBILE HEADER (<768px) — UNTOUCHED & IDENTICAL -->
+        <div class="mobile-header-wrap">
+            <div class="site-wrap">
+                <div class="header-top">
+                    <!-- Branding Logo Centered -->
+                    <div class="site-branding">
+                        <a href="/"><img src="{{ !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="site-logo-img"></a>
+                        <div class="site-tagline">Independent Fact-Checking & Digital Verification<br>Initiative in Bangladesh</div>
+                    </div>
+
+                    <!-- Controls Row: Left (Lang + WhatsApp), Right (Hamburger) -->
+                    <div class="header-controls-row">
+                        <!-- Left: Language Pill & WhatsApp -->
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="lang-pill-wrap notranslate" translate="no" title="Switch Language / ভাষা পরিবর্তন">
+                                <button type="button" id="btn-lang-bn" onclick="switchSiteLanguage('bn')" class="lang-pill">বাংলা</button>
+                                <span class="lang-pill-divider"></span>
+                                <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
+                            </div>
+
+                            <!-- WhatsApp Icon (FontAwesome Official) -->
+                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+                                <i class="fa-brands fa-whatsapp" style="color: rgb(10, 113, 4); font-size: 27px; line-height: 1;"></i>
+                            </a>
+                        </div>
+
+                        <!-- Right: Hamburger Menu Button (Clean 3-bar box) -->
+                        <button type="button" class="mobile-toggle-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="4" y1="6" x2="20" y2="6"></line>
+                                <line x1="4" y1="12" x2="20" y2="12"></line>
+                                <line x1="4" y1="18" x2="20" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
+
 
     <!-- Mobile Navigation Drawer -->
     <div id="drawerOverlay" class="mobile-drawer-overlay" onclick="toggleDrawer()"></div>
@@ -565,7 +820,8 @@
                 <!-- Col 1: About & Social Icons -->
                 <div>
                     <h4 style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 12px;">{{ $siteName }}</h4>
-                    <p style="margin-bottom: 16px; max-width: 380px; line-height: 1.6;">{{ $tagline }}</p>
+                    <p style="margin-bottom: 8px; max-width: 380px; line-height: 1.6;">{{ $tagline }}</p>
+                    <p style="font-size: 12px; color: #666666; margin-top: 0; margin-bottom: 16px; line-height: 1.4;">Independent Fact-Checking &amp; Digital Verification Initiative in Bangladesh</p>
                     <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                         @if(!empty($settings->social_links))
                             @foreach($settings->social_links as $item)
@@ -643,6 +899,143 @@
             </div>
         </div>
     </footer>
+
+    
+
+    <!-- Bottom Google Translate Scripts & Layout Handlers -->
+    <div id="google_translate_element" style="display:none !important; visibility:hidden !important; position:absolute; top:-9999px; left:-9999px; width:0; height:0;"></div>
+
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'bn',
+                includedLanguages: 'en,bn',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function switchSiteLanguage(lang) {
+            var btnBn = document.getElementById('btn-lang-bn');
+            var btnEn = document.getElementById('btn-lang-en');
+            var deskBtnBn = document.getElementById('desk-btn-lang-bn');
+            var deskBtnEn = document.getElementById('desk-btn-lang-en');
+            var host = window.location.hostname;
+
+            if (lang === 'en') {
+                if (btnEn) btnEn.classList.add('active');
+                if (btnBn) btnBn.classList.remove('active');
+                if (deskBtnEn) deskBtnEn.classList.add('active');
+                if (deskBtnBn) deskBtnBn.classList.remove('active');
+
+                var d = new Date();
+                d.setTime(d.getTime() + (365*24*60*60*1000));
+                var exp = "; expires=" + d.toUTCString();
+                document.cookie = "googtrans=/bn/en; path=/; domain=" + host + exp;
+                document.cookie = "googtrans=/bn/en; path=/; domain=." + host + exp;
+                document.cookie = "googtrans=/bn/en; path=/" + exp;
+
+                var select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    select.value = 'en';
+                    select.dispatchEvent(new Event('change'));
+                } else {
+                    window.location.reload();
+                }
+            } else {
+                if (btnBn) btnBn.classList.add('active');
+                if (btnEn) btnEn.classList.remove('active');
+                if (deskBtnBn) deskBtnBn.classList.add('active');
+                if (deskBtnEn) deskBtnEn.classList.remove('active');
+
+                var paths = ['/', '/page', '/article', '/category'];
+                ['googtrans', '__googtrans'].forEach(function(cName) {
+                    paths.forEach(function(p) {
+                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + ';';
+                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=' + host + ';';
+                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=.' + host + ';';
+                    });
+                });
+
+                var select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    select.value = 'bn';
+                    select.dispatchEvent(new Event('change'));
+                }
+                setTimeout(function() {
+                    window.location.href = window.location.pathname;
+                }, 100);
+            }
+        }
+
+        function syncActivePill() {
+            var isEn = document.cookie.indexOf('googtrans=/bn/en') !== -1;
+            var btnBn = document.getElementById('btn-lang-bn');
+            var btnEn = document.getElementById('btn-lang-en');
+            var deskBtnBn = document.getElementById('desk-btn-lang-bn');
+            var deskBtnEn = document.getElementById('desk-btn-lang-en');
+
+            if (isEn) {
+                if (btnEn) btnEn.classList.add('active');
+                if (btnBn) btnBn.classList.remove('active');
+                if (deskBtnEn) deskBtnEn.classList.add('active');
+                if (deskBtnBn) deskBtnBn.classList.remove('active');
+            } else {
+                if (btnBn) btnBn.classList.add('active');
+                if (btnEn) btnEn.classList.remove('active');
+                if (deskBtnBn) deskBtnBn.classList.add('active');
+                if (deskBtnEn) deskBtnEn.classList.remove('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', syncActivePill);
+        window.addEventListener('load', syncActivePill);
+
+        // Sticky Header scroll height handler
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('.site-header');
+            if (header) {
+                if (window.scrollY > 30) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            }
+        }, { passive: true });
+
+        // Announcement dismissal via localStorage
+        function checkAnnouncementDismissal() {
+            if (localStorage.getItem('fc_announcement_dismissed') === '1') {
+                var el = document.getElementById('topAnnouncementBar');
+                if (el) el.classList.add('dismissed');
+            }
+        }
+        function dismissAnnouncement() {
+            var el = document.getElementById('topAnnouncementBar');
+            if (el) el.classList.add('dismissed');
+            localStorage.setItem('fc_announcement_dismissed', '1');
+        }
+        document.addEventListener('DOMContentLoaded', checkAnnouncementDismissal);
+
+        // Expandable desktop search toggle
+        function toggleDesktopSearch() {
+            var form = document.getElementById('desktopSearchForm');
+            var input = document.getElementById('desktopSearchInput');
+            if (form) {
+                form.classList.toggle('open');
+                if (form.classList.contains('open') && input) {
+                    input.focus();
+                }
+            }
+        }
+        document.addEventListener('click', function(e) {
+            var wrap = document.getElementById('desktopSearchWrap');
+            var form = document.getElementById('desktopSearchForm');
+            if (wrap && form && !wrap.contains(e.target)) {
+                form.classList.remove('open');
+            }
+        });
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <script>
         function toggleDrawer() {
