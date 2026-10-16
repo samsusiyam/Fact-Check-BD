@@ -77,78 +77,121 @@
             font-weight: 600;
         }
 
-        /* Header */
+        /* Header Match */
         .site-header {
-            border-bottom: 1px solid var(--border-rule);
-            padding: 18px 0 14px 0;
-            background: var(--bg-color);
+            background: #FFFFFF !important;
+            padding: 18px 0 16px 0 !important;
+            border-bottom: 1px solid #E5E7EB !important;
         }
 
         .header-top {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
+            text-align: center;
+            width: 100%;
         }
 
         .site-branding {
-            text-align: left;
-        }
-        .site-logo-img {
-            max-height: 54px;
-            width: auto;
-            display: block;
-            object-fit: contain;
-        }
-        .site-title {
-            font-family: var(--font-serif);
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            line-height: 1.1;
-        }
-        .site-tagline {
-            font-family: var(--font-ui);
-            font-size: 12.5px;
-            color: var(--text-muted);
-            margin-top: 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
         }
 
-        /* Controls row containing Lang switcher + WhatsApp and Mobile menu */
+        .site-logo-img {
+            max-height: 48px !important;
+            width: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+            object-fit: contain !important;
+        }
+
+        .site-tagline {
+            font-family: var(--font-ui) !important;
+            font-size: 13px !important;
+            color: #4B5563 !important;
+            margin-top: 8px !important;
+            line-height: 1.45 !important;
+            max-width: 320px !important;
+            text-align: center !important;
+        }
+
+        /* Sub Header / Control Row with comfortable spacing */
         .header-controls-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            margin-top: 24px !important;
+            padding-top: 14px !important;
+            border-top: 1px solid #E5E7EB !important;
+            box-sizing: border-box !important;
         }
 
         /* Segmented Pill Language Switcher */
         .lang-pill-wrap {
-            display: inline-flex;
-            align-items: center;
-            background: #EDECE8;
-            border: 1px solid #D8D7D2;
-            border-radius: 4px;
-            padding: 2px 4px;
-            font-family: var(--font-ui);
-            font-size: 12px;
-            font-weight: 600;
+            display: inline-flex !important;
+            align-items: center !important;
+            background: #F3F4F6 !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 6px !important;
+            padding: 2px !important;
         }
+
         .lang-pill {
-            background: transparent;
-            border: none;
-            padding: 3px 8px;
-            border-radius: 3px;
-            cursor: pointer;
-            color: var(--text-dark);
-            font-family: inherit;
-            font-size: inherit;
-            font-weight: 700;
-            transition: all 0.15s ease;
+            background: transparent !important;
+            border: none !important;
+            padding: 4px 11px !important;
+            border-radius: 4px !important;
+            font-family: var(--font-ui) !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            color: #4B5563 !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
         }
+
         .lang-pill.active {
-            background: #FFF;
-            color: var(--accent-red);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background: #FFFFFF !important;
+            color: #DC2626 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
+        }
+
+        .lang-pill-divider {
+            width: 1px;
+            height: 14px;
+            background: #E5E7EB;
+            margin: 0 1px;
+        }
+
+        /* WhatsApp Outline Button */
+        .whatsapp-icon-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 32px !important;
+            height: 32px !important;
+            color: #25D366 !important;
+            text-decoration: none !important;
+            flex-shrink: 0 !important;
+            background: transparent !important;
+        }
+
+        /* Mobile Hamburger Toggle */
+        .mobile-toggle-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 40px !important;
+            height: 40px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #D1D5DB !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            padding: 0 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
         }
 
         /* Desktop Nav Menu */
@@ -183,17 +226,6 @@
             background: #FFF;
             border-radius: 2px;
             outline: none;
-        }
-
-        .mobile-toggle-btn {
-            display: none;
-            background: var(--text-dark);
-            color: #FFF;
-            border: none;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 3px;
-            font-size: 16px;
         }
 
         /* Mobile Drawer */
@@ -268,164 +300,20 @@
             font-size: 12.5px;
         }
 
-        /* Responsive Breakpoints */
+        /* Breakpoints */
         @media (max-width: 991px) {
             .header-nav { display: none !important; }
-            .mobile-toggle-btn { display: inline-flex !important; align-items: center; justify-content: center; }
+            .mobile-toggle-btn { display: inline-flex !important; }
             .footer-cols { grid-template-columns: 1fr; gap: 28px; }
             .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
-            
-            .header-top {
-                flex-direction: column !important;
-                align-items: flex-start !important;
-                gap: 12px !important;
-            }
-            .site-branding {
-                text-align: left !important;
-                width: 100% !important;
-            }
-            .header-controls-row {
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                width: 100% !important;
-                border-top: 1px solid var(--border-rule) !important;
-                padding-top: 10px !important;
-            }
-            .site-logo-img {
-                max-height: 48px !important;
-            }
-            .home-grid {
-                grid-template-columns: 1fr !important;
-                gap: 32px !important;
-            }
-        }
-    
-        
-        /* EXACT SCREENSHOT HEADER & SUB-HEADER FIX */
-        .site-header {
-            background: #FFFFFF !important;
-            padding: 16px 0 16px 0 !important;
-            border-bottom: 1px solid #E5E7EB !important;
-        }
-
-        .header-top {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .site-branding {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .site-logo-img {
-            max-height: 48px !important;
-            width: auto !important;
-            display: block !important;
-            margin: 0 auto !important;
-            object-fit: contain !important;
-        }
-
-        .site-tagline {
-            font-family: var(--font-ui) !important;
-            font-size: 13px !important;
-            color: #4B5563 !important;
-            margin-top: 8px !important;
-            line-height: 1.45 !important;
-            max-width: 320px !important;
-            text-align: center !important;
-        }
-
-        /* Controls row with generous top spacing and no tight line */
-        .header-controls-row {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            width: 100% !important;
-            margin-top: 22px !important;
-            padding-top: 16px !important;
-            border-top: 1px solid #E5E7EB !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Segmented Pill Language Switcher */
-        .lang-pill-wrap {
-            display: inline-flex !important;
-            align-items: center !important;
-            background: #F3F4F6 !important;
-            border: 1px solid #E5E7EB !important;
-            border-radius: 6px !important;
-            padding: 2px !important;
-        }
-
-        .lang-pill {
-            background: transparent !important;
-            border: none !important;
-            padding: 5px 12px !important;
-            border-radius: 4px !important;
-            font-family: var(--font-ui) !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            color: #4B5563 !important;
-            cursor: pointer !important;
-            transition: all 0.15s ease !important;
-        }
-
-        .lang-pill.active {
-            background: #FFFFFF !important;
-            color: #DC2626 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
-        }
-
-        .lang-pill-divider {
-            width: 1px;
-            height: 14px;
-            background: #E5E7EB;
-            margin: 0 1px;
-        }
-
-        /* WhatsApp Outline Button (Matching Screenshot exactly) */
-        .whatsapp-icon-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 34px !important;
-            height: 34px !important;
-            color: #25D366 !important;
-            text-decoration: none !important;
-            flex-shrink: 0 !important;
-            background: transparent !important;
-        }
-
-        /* Mobile Hamburger Toggle (White square with thin light-gray border) */
-        .mobile-toggle-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 40px !important;
-            height: 40px !important;
-            background: #FFFFFF !important;
-            border: 1px solid #D1D5DB !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            padding: 0 !important;
-            color: #111827 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
+            .home-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
         }
 
         @media (min-width: 992px) {
-            .mobile-toggle-btn {
-                display: none !important;
-            }
+            .mobile-toggle-btn { display: none !important; }
+            .mobile-drawer { display: none !important; }
+            .mobile-drawer-overlay { display: none !important; }
         }
-
     </style>
 
     
