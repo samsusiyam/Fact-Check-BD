@@ -39,12 +39,15 @@
     <!-- Optimized Self-Hosted Font & Image Preloads -->
     <link rel="preload" href="/fonts/font_00_Cn-fJsCGWQxOjaGwMQ6fIiMywrNJIky6nvd8BjzVMvJx2mc4I3mYvNY.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/fonts/font_02_hYkhPvggTvnzO14VSXltirUdnnkt1pwmWrprmO7RjE0a5BtdKyg8JCJZ.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/font_05_Cn-fJsCGWQxOjaGwMQ6fIiMywrNJIky6nvd8BjzVMvJx2mc4MXmY.woff2" as="font" type="font/woff2" crossorigin>
     @yield('head_preloads')
     @php
         $preloadLogo = !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png');
         $preloadLogoWebp = preg_replace('/\.(png|jpe?g)$/i', '.webp', $preloadLogo);
+        $preloadLogoMobileWebp = preg_replace('/\.(png|jpe?g)$/i', '_mobile.webp', $preloadLogo);
     @endphp
-    <link rel="preload" href="{{ $preloadLogoWebp }}" as="image" type="image/webp" fetchpriority="high">
+    <link rel="preload" href="{{ $preloadLogoMobileWebp }}" as="image" type="image/webp" media="(max-width: 767px)" fetchpriority="high">
+    <link rel="preload" href="{{ $preloadLogoWebp }}" as="image" type="image/webp" media="(min-width: 768px)" fetchpriority="high">
 
     <!-- Core Styles -->
     <style>
@@ -151,10 +154,13 @@
         <!-- MOBILE HEADER (<768px) — ONE COMPACT 56px ROW -->
         <div class="mobile-header-wrap">
             <!-- Left: Logo (height 28-32px, auto width) -->
+            @php
+                $siteLogoMobileWebp = preg_replace('/\.(png|jpe?g)$/i', '_mobile.webp', $siteLogoSrc);
+            @endphp
             <a href="/" class="mobile-logo-link" title="{{ $siteName }}">
                 <picture>
-                    <source srcset="{{ $siteLogoWebp }}" type="image/webp">
-                    <img src="{{ $siteLogoSrc }}" alt="{{ $siteName }}" class="mobile-logo-img" width="144" height="48" fetchpriority="high" decoding="async">
+                    <source srcset="{{ $siteLogoMobileWebp }}" type="image/webp">
+                    <img src="{{ $siteLogoSrc }}" alt="{{ $siteName }}" class="mobile-logo-img" width="144" height="48" fetchpriority="high">
                 </picture>
             </a>
 
@@ -338,193 +344,15 @@
     <!-- Bottom Google Translate Scripts & Layout Handlers -->
     <div id="google_translate_element" style="display:none !important; visibility:hidden !important; position:absolute; top:-9999px; left:-9999px; width:0; height:0;"></div>
 
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'bn',
-                includedLanguages: 'en,bn',
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-
-        function switchSiteLanguage(lang) {
-            if (!window.googleTranslateLoaded) {
-                loadGoogleTranslate();
-                setTimeout(function() { switchSiteLanguage(lang); }, 600);
-                return;
-            }
-            var btnBn = document.getElementById('btn-lang-bn');
-            var btnEn = document.getElementById('btn-lang-en');
-            var deskBtnBn = document.getElementById('desk-btn-lang-bn');
-            var deskBtnEn = document.getElementById('desk-btn-lang-en');
-            var host = window.location.hostname;
-
-            if (lang === 'en') {
-                if (btnEn) btnEn.classList.add('active');
-                if (btnBn) btnBn.classList.remove('active');
-                if (deskBtnEn) deskBtnEn.classList.add('active');
-                if (deskBtnBn) deskBtnBn.classList.remove('active');
-
-                var d = new Date();
-                d.setTime(d.getTime() + (365*24*60*60*1000));
-                var exp = "; expires=" + d.toUTCString();
-                document.cookie = "googtrans=/bn/en; path=/; domain=" + host + exp;
-                document.cookie = "googtrans=/bn/en; path=/; domain=." + host + exp;
-                document.cookie = "googtrans=/bn/en; path=/" + exp;
-
-                var select = document.querySelector('.goog-te-combo');
-                if (select) {
-                    select.value = 'en';
-                    select.dispatchEvent(new Event('change'));
-                } else {
-                    window.location.reload();
-                }
-            } else {
-                if (btnBn) btnBn.classList.add('active');
-                if (btnEn) btnEn.classList.remove('active');
-                if (deskBtnBn) deskBtnBn.classList.add('active');
-                if (deskBtnEn) deskBtnEn.classList.remove('active');
-
-                var paths = ['/', '/page', '/article', '/category'];
-                ['googtrans', '__googtrans'].forEach(function(cName) {
-                    paths.forEach(function(p) {
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + ';';
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=' + host + ';';
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=.' + host + ';';
-                    });
-                });
-
-                var select = document.querySelector('.goog-te-combo');
-                if (select) {
-                    select.value = 'bn';
-                    select.dispatchEvent(new Event('change'));
-                }
-                setTimeout(function() {
-                    window.location.href = window.location.pathname;
-                }, 100);
-            }
-        }
-
-        function syncActivePill() {
-            var isEn = document.cookie.indexOf('googtrans=/bn/en') !== -1;
-            var btnBn = document.getElementById('btn-lang-bn');
-            var btnEn = document.getElementById('btn-lang-en');
-            var deskBtnBn = document.getElementById('desk-btn-lang-bn');
-            var deskBtnEn = document.getElementById('desk-btn-lang-en');
-
-            if (isEn) {
-                if (btnEn) btnEn.classList.add('active');
-                if (btnBn) btnBn.classList.remove('active');
-                if (deskBtnEn) deskBtnEn.classList.add('active');
-                if (deskBtnBn) deskBtnBn.classList.remove('active');
-            } else {
-                if (btnBn) btnBn.classList.add('active');
-                if (btnEn) btnEn.classList.remove('active');
-                if (deskBtnBn) deskBtnBn.classList.add('active');
-                if (deskBtnEn) deskBtnEn.classList.remove('active');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', syncActivePill);
-        window.addEventListener('load', syncActivePill);
-
-        // Sticky Header scroll height handler
-        window.addEventListener('scroll', function() {
-            var header = document.querySelector('.site-header');
-            if (header) {
-                if (window.scrollY > 30) {
-                    header.classList.add('header-scrolled');
-                } else {
-                    header.classList.remove('header-scrolled');
-                }
-            }
-        }, { passive: true });
-
-        // Announcement dismissal (remembers dismissal in localStorage / sessionStorage)
-        function checkAnnouncementDismissal() {
-            try {
-                if (localStorage.getItem('fc_announcement_dismissed') === '1' || sessionStorage.getItem('fc_announcement_dismissed') === '1') {
-                    var el = document.getElementById('topAnnouncementBar');
-                    if (el) el.classList.add('dismissed');
-                }
-            } catch (e) {}
-        }
-        function dismissAnnouncement() {
-            var el = document.getElementById('topAnnouncementBar');
-            if (el) el.classList.add('dismissed');
-            try {
-                localStorage.setItem('fc_announcement_dismissed', '1');
-                sessionStorage.setItem('fc_announcement_dismissed', '1');
-            } catch (e) {}
-        }
-        document.addEventListener('DOMContentLoaded', checkAnnouncementDismissal);
-
-        // Expandable desktop search toggle
-        function toggleDesktopSearch() {
-            var form = document.getElementById('desktopSearchForm');
-            var input = document.getElementById('desktopSearchInput');
-            if (form) {
-                form.classList.toggle('open');
-                if (form.classList.contains('open') && input) {
-                    input.focus();
-                }
-            }
-        }
-        document.addEventListener('click', function(e) {
-            var wrap = document.getElementById('desktopSearchWrap');
-            var form = document.getElementById('desktopSearchForm');
-            if (wrap && form && !wrap.contains(e.target)) {
-                form.classList.remove('open');
-            }
-        });
-
-        // Mobile / Tablet Navigation Panel Toggle
-        function toggleDrawer() {
-            var drawer = document.getElementById('mobileDrawer');
-            var overlay = document.getElementById('drawerOverlay');
-            var btn = document.getElementById('mobileMenuButton');
-            if (!drawer) return;
-            var isOpen = drawer.classList.contains('open');
-            if (isOpen) {
-                drawer.classList.remove('open');
-                if (overlay) {
-                    overlay.classList.remove('open');
-                    overlay.style.display = 'none';
-                }
-                if (btn) btn.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            } else {
-                drawer.classList.add('open');
-                if (overlay) {
-                    overlay.style.display = 'block';
-                    setTimeout(function() { overlay.classList.add('open'); }, 10);
-                }
-                if (btn) btn.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-    </script>
     <script>
-        function loadGoogleTranslate() {
-            if (window.googleTranslateLoaded) return;
-            window.googleTranslateLoaded = true;
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.async = true;
-            script.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-            document.body.appendChild(script);
-        }
-
-        // Lazy load on idle after load, or on language button click
-        window.addEventListener('load', function() {
-            if ('requestIdleCallback' in window) {
-                requestIdleCallback(function() {
-                    setTimeout(loadGoogleTranslate, 3500);
-                });
-            } else {
-                setTimeout(loadGoogleTranslate, 3500);
-            }
-        });
-    </script>
+function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'bn',includedLanguages:'en,bn',autoDisplay:false},'google_translate_element')}
+function loadGoogleTranslate(cb){if(window.googleTranslateLoaded){if(typeof cb==='function')cb();return;}window.googleTranslateLoaded=true;var s=document.createElement('script');s.async=true;s.src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';if(typeof cb==='function')s.onload=cb;document.body.appendChild(s)}
+function switchSiteLanguage(l){if(l==='en'&&!window.googleTranslateLoaded){loadGoogleTranslate(function(){setTimeout(function(){switchSiteLanguage('en')},250)});return;}var bBn=document.getElementById('btn-lang-bn'),bEn=document.getElementById('btn-lang-en'),dBn=document.getElementById('desk-btn-lang-bn'),dEn=document.getElementById('desk-btn-lang-en'),h=window.location.hostname;if(l==='en'){if(bEn)bEn.classList.add('active');if(bBn)bBn.classList.remove('active');if(dEn)dEn.classList.add('active');if(dBn)dBn.classList.remove('active');var exp='; expires='+new Date(Date.now()+31536000000).toUTCString();document.cookie='googtrans=/bn/en; path=/; domain='+h+exp;document.cookie='googtrans=/bn/en; path=/; domain=.'+h+exp;document.cookie='googtrans=/bn/en; path=/'+exp;var sel=document.querySelector('.goog-te-combo');if(sel){sel.value='en';sel.dispatchEvent(new Event('change'))}else{window.location.reload()}}else{if(bBn)bBn.classList.add('active');if(bEn)bEn.classList.remove('active');if(dBn)dBn.classList.add('active');if(dEn)dEn.classList.remove('active');['googtrans','__googtrans'].forEach(function(c){['/','/page','/article','/category'].forEach(function(p){document.cookie=c+'=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='+p+';';document.cookie=c+'=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='+p+'; domain='+h+';';document.cookie=c+'=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='+p+'; domain=.'+h+';'})});var sel=document.querySelector('.goog-te-combo');if(sel){sel.value='bn';sel.dispatchEvent(new Event('change'))}setTimeout(function(){window.location.href=window.location.pathname},80)}}
+function syncActivePill(){var isEn=document.cookie.indexOf('googtrans=/bn/en')!==-1,bBn=document.getElementById('btn-lang-bn'),bEn=document.getElementById('btn-lang-en'),dBn=document.getElementById('desk-btn-lang-bn'),dEn=document.getElementById('desk-btn-lang-en');if(isEn){if(bEn)bEn.classList.add('active');if(bBn)bBn.classList.remove('active');if(dEn)dEn.classList.add('active');if(dBn)dBn.classList.remove('active')}else{if(bBn)bBn.classList.add('active');if(bEn)bEn.classList.remove('active');if(dBn)dBn.classList.add('active');if(dEn)dEn.classList.remove('active')}}
+function dismissAnnouncement(){var el=document.getElementById('topAnnouncementBar');if(el)el.classList.add('dismissed');try{localStorage.setItem('fc_announcement_dismissed','1');sessionStorage.setItem('fc_announcement_dismissed','1')}catch(e){}}
+function toggleDesktopSearch(){var f=document.getElementById('desktopSearchForm'),i=document.getElementById('desktopSearchInput');if(f){f.classList.toggle('open');if(f.classList.contains('open')&&i)i.focus()}}
+function toggleDrawer(){var d=document.getElementById('mobileDrawer'),o=document.getElementById('drawerOverlay'),b=document.getElementById('mobileMenuButton');if(!d)return;if(d.classList.contains('open')){d.classList.remove('open');if(o){o.classList.remove('open');o.style.display='none'}if(b)b.setAttribute('aria-expanded','false');document.body.style.overflow=''}else{d.classList.add('open');if(o){o.style.display='block';setTimeout(function(){o.classList.add('open')},10)}if(b)b.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}}
+document.addEventListener('DOMContentLoaded',function(){syncActivePill();var h=document.querySelector('.site-header');if(h){window.addEventListener('scroll',function(){if(window.scrollY>30){h.classList.add('header-scrolled')}else{h.classList.remove('header-scrolled')}},{passive:true})};document.addEventListener('click',function(e){var w=document.getElementById('desktopSearchWrap'),f=document.getElementById('desktopSearchForm');if(w&&f&&!w.contains(e.target))f.classList.remove('open')})});
+</script>
 </body>
 </html>

@@ -2,8 +2,10 @@
     @if($leadPost && $leadPost->getFirstMediaUrl('featured_image'))
         @php
             $leadImgP = preg_replace('/\.(png|jpe?g)$/i', '.webp', $leadPost->getFirstMediaUrl('featured_image'));
+            $leadImgPMobile = preg_replace('/\.(png|jpe?g)$/i', '_mobile.webp', $leadPost->getFirstMediaUrl('featured_image'));
         @endphp
-        <link rel="preload" href="{{ $leadImgP }}" as="image" type="image/webp" fetchpriority="high">
+        <link rel="preload" href="{{ $leadImgPMobile }}" as="image" type="image/webp" media="(max-width: 640px)" fetchpriority="high">
+        <link rel="preload" href="{{ $leadImgP }}" as="image" type="image/webp" media="(min-width: 641px)" fetchpriority="high">
     @endif
 @endsection
 
@@ -29,12 +31,14 @@
                         @php
                             $leadImgUrl = $leadPost->getFirstMediaUrl('featured_image');
                             $leadWebpUrl = preg_replace('/\.(png|jpe?g)$/i', '.webp', $leadImgUrl);
+                            $leadMobileWebpUrl = preg_replace('/\.(png|jpe?g)$/i', '_mobile.webp', $leadImgUrl);
                         @endphp
                         <div style="margin-bottom: 18px; overflow: hidden; border: 1px solid var(--border-rule);">
                             <a href="{{ route('article.show', $leadPost->slug) }}">
                                 <picture>
+                                    <source media="(max-width: 640px)" srcset="{{ $leadMobileWebpUrl }}" type="image/webp">
                                     <source srcset="{{ $leadWebpUrl }}" type="image/webp">
-                                    <img src="{{ $leadImgUrl }}" alt="{{ $leadPost->title_bn }}" width="700" height="394" fetchpriority="high" decoding="async" style="width: 100%; height: auto; aspect-ratio: 16 / 9; display: block; object-fit: cover; max-height: 420px;">
+                                    <img src="{{ $leadImgUrl }}" alt="{{ $leadPost->title_bn }}" width="700" height="394" fetchpriority="high" style="width: 100%; height: auto; aspect-ratio: 16 / 9; display: block; object-fit: cover; max-height: 420px;">
                                 </picture>
                             </a>
                         </div>

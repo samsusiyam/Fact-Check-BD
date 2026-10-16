@@ -116,7 +116,7 @@
             <div style="margin-bottom: 30px; text-align: center;">
                 <picture>
                     <source srcset="{{ $artWebpUrl }}" type="image/webp">
-                    <img src="{{ $artImgUrl }}" alt="{{ $title }}" width="800" height="450" fetchpriority="high" decoding="async" style="width: 100%; height: auto; border: 1px solid var(--border-rule); max-height: 480px; object-fit: cover;">
+                    <img src="{{ $artImgUrl }}" alt="{{ $title }}" width="800" height="450" fetchpriority="high" style="width: 100%; height: auto; border: 1px solid var(--border-rule); max-height: 480px; object-fit: cover;">
                 </picture>
             </div>
         @endif
