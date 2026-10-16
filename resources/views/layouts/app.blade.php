@@ -148,7 +148,7 @@
                 </div>
 
                 <!-- "দাবি পাঠান" Button (40px height, 1px border/solid accent, border-radius max 2px) -->
-                <a href="/submit-claim" class="desktop-claim-btn notranslate">দাবি পাঠান</a>
+                <a href="/submit-claim" class="desktop-claim-btn">দাবি পাঠান</a>
             </div>
         </div>
 
@@ -233,15 +233,15 @@
                 </div>
             </div>
 
-            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="mobile-drawer-whatsapp notranslate" title="WhatsApp Tipline">
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="mobile-drawer-whatsapp" title="WhatsApp Tipline">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366" style="flex-shrink: 0;" aria-hidden="true">
                     <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.312.045-.634.053-1.849-.444-1.503-.615-2.477-2.146-2.551-2.247-.075-.1-.611-.814-.611-1.554 0-.74.385-1.103.522-1.253.136-.15.298-.187.397-.187.099 0 .198.001.284.006.09.004.21-.034.328.25.123.297.42 1.026.457 1.101.037.075.062.163.013.262-.05.1-.075.163-.15.25-.075.088-.158.196-.226.264-.075.075-.153.158-.066.308.087.15.388.641.833 1.037.573.51 1.057.668 1.206.743.15.075.237.063.325-.038.087-.101.374-.436.474-.586.099-.15.2-.125.336-.075.137.05.867.409 1.016.484.15.075.249.112.286.175.037.063.037.362-.107.767zM12 2C6.477 2 2 6.477 2 12c0 1.891.523 3.662 1.434 5.176L2 22l4.966-1.399A9.956 9.956 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/>
                 </svg>
-                <span>হোয়াটসঅ্যাপ টিপলাইন (WhatsApp)</span>
+                <span>হোয়াটসঅ্যাপ টিপলাইন</span>
             </a>
 
-            <a href="/submit-claim" onclick="toggleDrawer()" class="mobile-drawer-claim-btn notranslate">
-                দাবি পাঠান (Submit Claim) &rarr;
+            <a href="/submit-claim" onclick="toggleDrawer()" class="mobile-drawer-claim-btn">
+                দাবি পাঠান &rarr;
             </a>
         </div>
     </div>
@@ -349,7 +349,7 @@
 function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'bn',includedLanguages:'en,bn',autoDisplay:false},'google_translate_element')}
 function loadGoogleTranslate(cb){if(window.googleTranslateLoaded){if(typeof cb==='function')cb();return;}window.googleTranslateLoaded=true;var s=document.createElement('script');s.async=true;s.src='//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';if(typeof cb==='function')s.onload=cb;document.body.appendChild(s)}
 function switchSiteLanguage(l){if(l==='en'&&!window.googleTranslateLoaded){loadGoogleTranslate(function(){setTimeout(function(){switchSiteLanguage('en')},250)});return;}var bBn=document.getElementById('btn-lang-bn'),bEn=document.getElementById('btn-lang-en'),dBn=document.getElementById('desk-btn-lang-bn'),dEn=document.getElementById('desk-btn-lang-en'),h=window.location.hostname;if(l==='en'){if(bEn)bEn.classList.add('active');if(bBn)bBn.classList.remove('active');if(dEn)dEn.classList.add('active');if(dBn)dBn.classList.remove('active');var exp='; expires='+new Date(Date.now()+31536000000).toUTCString();document.cookie='googtrans=/bn/en; path=/; domain='+h+exp;document.cookie='googtrans=/bn/en; path=/; domain=.'+h+exp;document.cookie='googtrans=/bn/en; path=/'+exp;var sel=document.querySelector('.goog-te-combo');if(sel){sel.value='en';sel.dispatchEvent(new Event('change'))}else{window.location.reload()}}else{if(bBn)bBn.classList.add('active');if(bEn)bEn.classList.remove('active');if(dBn)dBn.classList.add('active');if(dEn)dEn.classList.remove('active');['googtrans','__googtrans'].forEach(function(c){['/','/page','/article','/category'].forEach(function(p){document.cookie=c+'=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='+p+';';document.cookie=c+'=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='+p+'; domain='+h+';';document.cookie=c+'=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path='+p+'; domain=.'+h+';'})});var sel=document.querySelector('.goog-te-combo');if(sel){sel.value='bn';sel.dispatchEvent(new Event('change'))}setTimeout(function(){window.location.href=window.location.pathname},80)}}
-function syncActivePill(){var isEn=document.cookie.indexOf('googtrans=/bn/en')!==-1,bBn=document.getElementById('btn-lang-bn'),bEn=document.getElementById('btn-lang-en'),dBn=document.getElementById('desk-btn-lang-bn'),dEn=document.getElementById('desk-btn-lang-en');if(isEn){if(bEn)bEn.classList.add('active');if(bBn)bBn.classList.remove('active');if(dEn)dEn.classList.add('active');if(dBn)dBn.classList.remove('active')}else{if(bBn)bBn.classList.add('active');if(bEn)bEn.classList.remove('active');if(dBn)dBn.classList.add('active');if(dEn)dEn.classList.remove('active')}}
+function syncActivePill(){var isEn=document.cookie.indexOf('googtrans=/bn/en')!==-1,bBn=document.getElementById('btn-lang-bn'),bEn=document.getElementById('btn-lang-en'),dBn=document.getElementById('desk-btn-lang-bn'),dEn=document.getElementById('desk-btn-lang-en');if(isEn){if(bEn)bEn.classList.add('active');if(bBn)bBn.classList.remove('active');if(dEn)dEn.classList.add('active');if(dBn)dBn.classList.remove('active');loadGoogleTranslate();}else{if(bBn)bBn.classList.add('active');if(bEn)bEn.classList.remove('active');if(dBn)dBn.classList.add('active');if(dEn)dEn.classList.remove('active')}}
 function dismissAnnouncement(){var el=document.getElementById('topAnnouncementBar');if(el)el.classList.add('dismissed');try{localStorage.setItem('fc_announcement_dismissed','1');sessionStorage.setItem('fc_announcement_dismissed','1')}catch(e){}}
 function toggleDesktopSearch(){var f=document.getElementById('desktopSearchForm'),i=document.getElementById('desktopSearchInput');if(f){f.classList.toggle('open');if(f.classList.contains('open')&&i)i.focus()}}
 function toggleDrawer(){var d=document.getElementById('mobileDrawer'),o=document.getElementById('drawerOverlay'),b=document.getElementById('mobileMenuButton');if(!d)return;if(d.classList.contains('open')){d.classList.remove('open');if(o){o.classList.remove('open');o.style.display='none'}if(b)b.setAttribute('aria-expanded','false');document.body.style.overflow=''}else{d.classList.add('open');if(o){o.style.display='block';setTimeout(function(){o.classList.add('open')},10)}if(b)b.setAttribute('aria-expanded','true');document.body.style.overflow='hidden'}}
