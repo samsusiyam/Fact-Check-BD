@@ -1,0 +1,20 @@
+@media (max-width: 768px) {
+    .fi-sidebar {
+        z-index: 100 !important;
+    }
+    .fi-ta-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .fi-fo-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .fi-fo-field-wrp {
+        width: 100% !important;
+    }
+    .fi-modal-window {
+        padding: 1rem !important;
+        max-width: 95vw !important;
+    }
+}
