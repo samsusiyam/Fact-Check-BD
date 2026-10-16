@@ -1,3 +1,12 @@
+@section('head_preloads')
+    @if($post->getFirstMediaUrl('featured_image'))
+        @php
+            $artImgP = preg_replace('/\.(png|jpe?g)$/i', '.webp', $post->getFirstMediaUrl('featured_image'));
+        @endphp
+        <link rel="preload" href="{{ $artImgP }}" as="image" type="image/webp" fetchpriority="high">
+    @endif
+@endsection
+
 @extends('layouts.app')
 
 @php
@@ -100,8 +109,15 @@
         </div>
 
         @if($post->getFirstMediaUrl('featured_image'))
+            @php
+                $artImgUrl = $post->getFirstMediaUrl('featured_image');
+                $artWebpUrl = preg_replace('/\.(png|jpe?g)$/i', '.webp', $artImgUrl);
+            @endphp
             <div style="margin-bottom: 30px; text-align: center;">
-                <img src="{{ $post->getFirstMediaUrl('featured_image') }}" alt="{{ $title }}" style="width: 100%; height: auto; border: 1px solid var(--border-rule); max-height: 480px; object-fit: cover;">
+                <picture>
+                    <source srcset="{{ $artWebpUrl }}" type="image/webp">
+                    <img src="{{ $artImgUrl }}" alt="{{ $title }}" width="800" height="450" fetchpriority="high" decoding="async" style="width: 100%; height: auto; border: 1px solid var(--border-rule); max-height: 480px; object-fit: cover;">
+                </picture>
             </div>
         @endif
 

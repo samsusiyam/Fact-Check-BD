@@ -41,7 +41,7 @@ Route::get('/', function (Request $request) {
     $popularPosts = Post::published()->orderBy('views_count', 'desc')->take(5)->get();
     $categories = Category::all();
 
-    return view('home', compact('leadPost', 'posts', 'categories', 'popularPosts'));
+    return response()->view('home', compact('leadPost', 'posts', 'categories', 'popularPosts'))->header('Cache-Control', 'public, max-age=60, s-maxage=300');
 })->name('home');
 
 // Search Route
@@ -85,7 +85,7 @@ Route::get('/article/{slug}', function ($slug, Request $request) {
         ->take(3)
         ->get();
 
-    return view('article', compact('post', 'relatedPosts'));
+    return response()->view('article', compact('post', 'relatedPosts'))->header('Cache-Control', 'public, max-age=60, s-maxage=300');
 })->name('article.show');
 
 // Photocard Download / Direct View

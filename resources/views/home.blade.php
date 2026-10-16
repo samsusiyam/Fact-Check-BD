@@ -1,3 +1,12 @@
+@section('head_preloads')
+    @if($leadPost && $leadPost->getFirstMediaUrl('featured_image'))
+        @php
+            $leadImgP = preg_replace('/\.(png|jpe?g)$/i', '.webp', $leadPost->getFirstMediaUrl('featured_image'));
+        @endphp
+        <link rel="preload" href="{{ $leadImgP }}" as="image" type="image/webp" fetchpriority="high">
+    @endif
+@endsection
+
 @extends('layouts.app')
 
 @section('content')
@@ -17,9 +26,16 @@
                     </div>
 
                     @if($leadPost->getFirstMediaUrl('featured_image'))
+                        @php
+                            $leadImgUrl = $leadPost->getFirstMediaUrl('featured_image');
+                            $leadWebpUrl = preg_replace('/\.(png|jpe?g)$/i', '.webp', $leadImgUrl);
+                        @endphp
                         <div style="margin-bottom: 18px; overflow: hidden; border: 1px solid var(--border-rule);">
                             <a href="{{ route('article.show', $leadPost->slug) }}">
-                                <img src="{{ $leadPost->getFirstMediaUrl('featured_image') }}" alt="{{ $leadPost->title_bn }}" style="width: 100%; height: auto; display: block; object-fit: cover; max-height: 420px;">
+                                <picture>
+                                    <source srcset="{{ $leadWebpUrl }}" type="image/webp">
+                                    <img src="{{ $leadImgUrl }}" alt="{{ $leadPost->title_bn }}" width="700" height="394" fetchpriority="high" decoding="async" style="width: 100%; height: auto; aspect-ratio: 16 / 9; display: block; object-fit: cover; max-height: 420px;">
+                                </picture>
                             </a>
                         </div>
                     @endif
@@ -47,9 +63,16 @@
                 @foreach($posts as $post)
                     <article style="border-bottom: 1px solid var(--border-rule); padding: 22px 0; display: flex; gap: 20px; align-items: flex-start;">
                         @if($post->getFirstMediaUrl('featured_image'))
+                            @php
+                                $thumbImgUrl = $post->getFirstMediaUrl('featured_image');
+                                $thumbWebpUrl = preg_replace('/\.(png|jpe?g)$/i', '.webp', $thumbImgUrl);
+                            @endphp
                             <div style="flex-shrink: 0; width: 140px; height: 95px; overflow: hidden; border: 1px solid var(--border-rule);">
                                 <a href="{{ route('article.show', $post->slug) }}">
-                                    <img src="{{ $post->getFirstMediaUrl('featured_image') }}" alt="{{ $post->title_bn }}" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                                    <picture>
+                                        <source srcset="{{ $thumbWebpUrl }}" type="image/webp">
+                                        <img src="{{ $thumbImgUrl }}" alt="{{ $post->title_bn }}" width="140" height="95" loading="lazy" decoding="async" style="width: 100%; height: 100%; aspect-ratio: 140 / 95; object-fit: cover; display: block;">
+                                    </picture>
                                 </a>
                             </div>
                         @endif
