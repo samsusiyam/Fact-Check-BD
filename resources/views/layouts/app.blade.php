@@ -327,145 +327,15 @@
     </style>
 
     
-    <!-- Google Translate Integration -->
+        <!-- Google Translate Script & Handler -->
     <style>
-        .goog-te-banner-frame, .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame {
-            display: none !important;
-            visibility: hidden !important;
-            height: 0 !important;
-        }
+        .goog-te-banner-frame, .goog-te-banner-frame.skiptranslate, iframe.goog-te-banner-frame { display: none !important; }
         body { top: 0px !important; position: static !important; }
         .goog-tooltip, .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
-        #google_translate_element, .skiptranslate { display: none !important; }
-    
-        
-        /* EXACT SCREENSHOT HEADER & SUB-HEADER FIX */
-        .site-header {
-            background: #FFFFFF !important;
-            padding: 16px 0 16px 0 !important;
-            border-bottom: 1px solid #E5E7EB !important;
-        }
-
-        .header-top {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .site-branding {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .site-logo-img {
-            max-height: 85px !important;
-            width: auto !important;
-            display: block !important;
-            margin: 0 auto !important;
-            object-fit: contain !important;
-        }
-
-        .site-tagline {
-            font-family: var(--font-ui) !important;
-            font-size: 13px !important;
-            color: #4B5563 !important;
-            margin-top: 8px !important;
-            line-height: 1.45 !important;
-            max-width: 320px !important;
-            text-align: center !important;
-        }
-
-        /* Controls row with generous top spacing and no tight line */
-        .header-controls-row {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            width: 100% !important;
-            margin-top: 22px !important;
-            padding-top: 16px !important;
-            border-top: 1px solid #E5E7EB !important;
-            box-sizing: border-box !important;
-        }
-
-        /* Segmented Pill Language Switcher */
-        .lang-pill-wrap {
-            display: inline-flex !important;
-            align-items: center !important;
-            background: #F3F4F6 !important;
-            border: 1px solid #E5E7EB !important;
-            border-radius: 6px !important;
-            padding: 2px !important;
-        }
-
-        .lang-pill {
-            background: transparent !important;
-            border: none !important;
-            padding: 5px 12px !important;
-            border-radius: 4px !important;
-            font-family: var(--font-ui) !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            color: #4B5563 !important;
-            cursor: pointer !important;
-            transition: all 0.15s ease !important;
-        }
-
-        .lang-pill.active {
-            background: #FFFFFF !important;
-            color: #DC2626 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
-        }
-
-        .lang-pill-divider {
-            width: 1px;
-            height: 14px;
-            background: #E5E7EB;
-            margin: 0 1px;
-        }
-
-        /* WhatsApp Outline Button (Matching Screenshot exactly) */
-        .whatsapp-icon-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 34px !important;
-            height: 34px !important;
-            color: #25D366 !important;
-            text-decoration: none !important;
-            flex-shrink: 0 !important;
-            background: transparent !important;
-        }
-
-        /* Mobile Hamburger Toggle (White square with thin light-gray border) */
-        .mobile-toggle-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 40px !important;
-            height: 40px !important;
-            background: #FFFFFF !important;
-            border: 1px solid #D1D5DB !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            padding: 0 !important;
-            color: #111827 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
-        }
-
-        @media (min-width: 992px) {
-            .mobile-toggle-btn {
-                display: none !important;
-            }
-        }
-
+        #google_translate_element { display: none !important; }
     </style>
-    <div id="google_translate_element" style="display:none;"></div>
+    <div id="google_translate_element"></div>
     <script type="text/javascript">
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
@@ -475,22 +345,57 @@
             }, 'google_translate_element');
         }
 
-        function getGoogTrans() {
-            var name = "googtrans=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i].trim();
-                if (c.indexOf(name) === 0) {
-                    return c.substring(name.length, c.length);
+        function switchSiteLanguage(lang) {
+            var host = window.location.hostname;
+            var btnBn = document.getElementById('btn-lang-bn');
+            var btnEn = document.getElementById('btn-lang-en');
+
+            if (lang === 'en') {
+                if (btnEn) btnEn.classList.add('active');
+                if (btnBn) btnBn.classList.remove('active');
+
+                // Set cookie across all domain scopes
+                var expires = new Date();
+                expires.setTime(expires.getTime() + (365 * 24 * 60 * 60 * 1000));
+                var expStr = "; expires=" + expires.toUTCString();
+                document.cookie = "googtrans=/bn/en; path=/" + expStr;
+                document.cookie = "googtrans=/bn/en; path=/; domain=" + host + expStr;
+                document.cookie = "googtrans=/bn/en; path=/; domain=." + host + expStr;
+
+                // Fire combo change
+                var select = document.querySelector('#google_translate_element select');
+                if (select) {
+                    select.value = 'en';
+                    select.dispatchEvent(new Event('change'));
+                } else {
+                    window.location.reload();
                 }
+            } else {
+                if (btnBn) btnBn.classList.add('active');
+                if (btnEn) btnEn.classList.remove('active');
+
+                var paths = ['/', '/page', '/article', '/category'];
+                ['googtrans', '__googtrans'].forEach(function(cName) {
+                    paths.forEach(function(p) {
+                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + ';';
+                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=' + host + ';';
+                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=.' + host + ';';
+                    });
+                });
+
+                var select = document.querySelector('#google_translate_element select');
+                if (select) {
+                    select.value = 'bn';
+                    select.dispatchEvent(new Event('change'));
+                }
+                setTimeout(function() {
+                    window.location.href = window.location.pathname;
+                }, 100);
             }
-            return "";
         }
 
-        function syncLanguagePills() {
-            var gt = getGoogTrans();
-            var isEn = gt && (gt.indexOf('/en') !== -1 || gt.indexOf('en') !== -1);
+        function checkActivePill() {
+            var isEn = document.cookie.indexOf('googtrans=/bn/en') !== -1;
             var btnBn = document.getElementById('btn-lang-bn');
             var btnEn = document.getElementById('btn-lang-en');
             if (btnBn && btnEn) {
@@ -503,58 +408,11 @@
                 }
             }
         }
-
-        function switchSiteLanguage(lang) {
-            var host = window.location.hostname;
-            var btnBn = document.getElementById('btn-lang-bn');
-            var btnEn = document.getElementById('btn-lang-en');
-
-            if (lang === 'bn') {
-                if (btnBn && btnEn) {
-                    btnBn.classList.add('active');
-                    btnEn.classList.remove('active');
-                }
-                var paths = ['/', '/page', '/article', '/category'];
-                ['googtrans', '__googtrans'].forEach(function(cName) {
-                    paths.forEach(function(p) {
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + ';';
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=' + host + ';';
-                        document.cookie = cName + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=' + p + '; domain=.' + host + ';';
-                    });
-                });
-                var select = document.querySelector('#google_translate_element select');
-                if (select) {
-                    select.value = 'bn';
-                    select.dispatchEvent(new Event('change'));
-                }
-                setTimeout(function() {
-                    window.location.href = window.location.pathname;
-                }, 100);
-            } else if (lang === 'en') {
-                if (btnBn && btnEn) {
-                    btnEn.classList.add('active');
-                    btnBn.classList.remove('active');
-                }
-                document.cookie = "googtrans=/bn/en; path=/; domain=" + host;
-                document.cookie = "googtrans=/bn/en; path=/; domain=." + host;
-                document.cookie = "googtrans=/bn/en; path=/;";
-                
-                var select = document.querySelector('#google_translate_element select');
-                if (select) {
-                    select.value = 'en';
-                    select.dispatchEvent(new Event('change'));
-                }
-                setTimeout(function() {
-                    window.location.reload();
-                }, 100);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', syncLanguagePills);
-        window.addEventListener('load', syncLanguagePills);
-        setInterval(syncLanguagePills, 400);
+        document.addEventListener('DOMContentLoaded', checkActivePill);
+        window.addEventListener('load', checkActivePill);
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
 
 </head>
 <body>
@@ -586,9 +444,12 @@
                             <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
                         </div>
 
-                        <!-- WhatsApp Icon (Official Image) -->
+                        <!-- WhatsApp Official Brand SVG Icon -->
                         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline">
-                            <img src="{{ asset('storage/branding/whatsapp.png') }}" alt="WhatsApp" style="width: 34px !important; height: 34px !important; border-radius: 50% !important; display: block !important; object-fit: cover !important;">
+                            <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="22" fill="#25D366" stroke="#FFFFFF" stroke-width="2.5"></circle>
+                                <path d="M33.5 28.5c-.5-.3-2.8-1.4-3.3-1.6-.4-.2-.8-.3-1.1.3-.3.5-1.2 1.6-1.5 1.9-.3.3-.6.3-1.1.1-.5-.3-2.1-.8-4-2.5-1.5-1.3-2.5-3-2.8-3.5-.3-.5 0-.8.2-1 .2-.2.5-.5.7-.8.2-.3.3-.5.5-.8.2-.3 0-.6-.1-.8-.1-.3-1.1-2.7-1.5-3.7-.4-1-.8-.9-1.1-.9h-1c-.3 0-.8.1-1.3.6-.5.5-1.8 1.7-1.8 4.2s1.9 4.9 2.1 5.2c.3.3 3.6 5.5 8.7 7.7 1.2.5 2.2.8 2.9 1 1.2.4 2.3.3 3.2.2 1-.2 2.8-1.2 3.2-2.3.4-1.2.4-2.2.3-2.4-.1-.3-.4-.5-.9-.7z" fill="#FFFFFF"></path>
+                            </svg>
                         </a>
                     </div>
 
