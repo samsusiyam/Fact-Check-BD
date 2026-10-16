@@ -35,21 +35,33 @@ class BrandingSettingsPage extends Page
                         FileUpload::make('logo_light')
                             ->label('Primary Logo (Light / Canvas)')
                             ->image()
+                            ->disk('public')
+                            ->visibility('public')
                             ->directory('branding')
-                            ->helperText('SVG recommended for razor-sharp rendering on Retina displays'),
+                            ->preserveFilenames()
+                            ->helperText('PNG/SVG recommended. Stored in public storage for instant display.'),
                         FileUpload::make('logo_dark')
                             ->label('Dark Mode Logo (Optional)')
                             ->image()
-                            ->directory('branding'),
+                            ->disk('public')
+                            ->visibility('public')
+                            ->directory('branding')
+                            ->preserveFilenames(),
                         FileUpload::make('favicon')
                             ->label('Favicon')
                             ->image()
+                            ->disk('public')
+                            ->visibility('public')
                             ->directory('branding')
+                            ->preserveFilenames()
                             ->helperText('SVG or 32x32 PNG icon for browser tabs'),
                         FileUpload::make('default_og_image')
                             ->label('Default Social Share Image (1200x630)')
                             ->image()
-                            ->directory('branding'),
+                            ->disk('public')
+                            ->visibility('public')
+                            ->directory('branding')
+                            ->preserveFilenames(),
                     ])->columns(2),
             ])
             ->statePath('data');
