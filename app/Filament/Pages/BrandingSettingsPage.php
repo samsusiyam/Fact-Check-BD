@@ -35,7 +35,7 @@ class BrandingSettingsPage extends Page
         return $form
             ->schema([
                 Section::make('Logos & Visual Identity')
-                    ->description('Upload publication logos and favicons. Uploaded files are stored directly in public storage.')
+                    ->description('Upload publication logos and favicons. Uploaded files are stored permanently in public storage.')
                     ->schema([
                         FileUpload::make('logo_light')
                             ->label('Primary Logo (Light / Canvas)')
@@ -72,13 +72,30 @@ class BrandingSettingsPage extends Page
     public function save(SiteSettings $settings): void
     {
         $state = $this->form->getState();
-        
-        $settings->logo_light = $state['logo_light'] ?? $settings->logo_light;
-        $settings->logo_dark = $state['logo_dark'] ?? $settings->logo_dark;
-        $settings->favicon = $state['favicon'] ?? $settings->favicon;
-        $settings->default_og_image = $state['default_og_image'] ?? $settings->default_og_image;
+
+        // If an array is returned by FileUpload, pick the first file path or string
+        foreach (['logo_light', 'logo_dark', 'favicon', 'default_og_image'] as $field) {
+            if (isset($state[$field])) {
+                $val = $state[$field];
+                if (is_array($val)) {
+                    $val = array_values($val)[0] ?? null;
+                }
+                if (!empty($val)) {
+                    $settings->{$field} = (string) $val;
+                }
+            }
+        }
+
         $settings->save();
 
-        Notification::make()->title('Branding updated successfully')->success()->send();
+        // Refill form with fresh saved data so it never disappears from view!
+        $this->form->fill([
+            'logo_light' => $settings->logo_light,
+            'logo_dark' => $settings->logo_dark,
+            'favicon' => $settings->favicon,
+            'default_og_image' => $settings->default_og_image,
+        ]);
+
+        Notification::make()->title('Branding updated and saved successfully!')->success()->send();
     }
 }
