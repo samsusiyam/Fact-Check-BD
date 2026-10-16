@@ -416,6 +416,7 @@
 
 
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
     @if(!empty($settings->enable_announcement) && !empty($settings->announcement_text_bn))
@@ -446,12 +447,9 @@
                             <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
                         </div>
 
-                        <!-- WhatsApp Official Brand SVG Icon -->
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline">
-                            <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
-                                <circle cx="24" cy="24" r="22" fill="#25D366" stroke="#FFFFFF" stroke-width="2.5"></circle>
-                                <path d="M33.5 28.5c-.5-.3-2.8-1.4-3.3-1.6-.4-.2-.8-.3-1.1.3-.3.5-1.2 1.6-1.5 1.9-.3.3-.6.3-1.1.1-.5-.3-2.1-.8-4-2.5-1.5-1.3-2.5-3-2.8-3.5-.3-.5 0-.8.2-1 .2-.2.5-.5.7-.8.2-.3.3-.5.5-.8.2-.3 0-.6-.1-.8-.1-.3-1.1-2.7-1.5-3.7-.4-1-.8-.9-1.1-.9h-1c-.3 0-.8.1-1.3.6-.5.5-1.8 1.7-1.8 4.2s1.9 4.9 2.1 5.2c.3.3 3.6 5.5 8.7 7.7 1.2.5 2.2.8 2.9 1 1.2.4 2.3.3 3.2.2 1-.2 2.8-1.2 3.2-2.3.4-1.2.4-2.2.3-2.4-.1-.3-.4-.5-.9-.7z" fill="#FFFFFF"></path>
-                            </svg>
+                        <!-- WhatsApp Icon (FontAwesome Official) -->
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
+                            <i class="fa-brands fa-whatsapp" style="color: rgb(10, 113, 4); font-size: 27px; line-height: 1;"></i>
                         </a>
                     </div>
 
