@@ -139,23 +139,56 @@
         @media (max-width: 767px) {
             .top-announcement {
                 display: block !important;
-                height: auto !important;
-                max-height: none !important;
+                height: 36px !important;
+                max-height: 36px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
             }
             .top-announcement-inner {
-                height: auto !important;
-                padding: 7px 12px !important;
+                height: 36px !important;
+                padding: 0 46px 0 12px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-start !important;
+                position: relative !important;
+                box-sizing: border-box !important;
             }
             .top-announcement-text {
-                font-size: 11.5px !important;
-                line-height: 1.45 !important;
-                white-space: normal !important;
-                padding-right: 22px !important;
+                font-size: 13px !important;
+                line-height: 36px !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                text-align: left !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
             }
+            .desktop-announcement-text { display: none !important; }
+            .mobile-announcement-text { display: inline !important; }
             .top-announcement-close {
-                right: 8px !important;
-                font-size: 17px !important;
+                position: absolute !important;
+                right: 0 !important;
+                top: 50% !important;
+                transform: translateY(-50%) !important;
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                min-height: 44px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                font-size: 20px !important;
+                color: #888888 !important;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                cursor: pointer !important;
+                box-sizing: border-box !important;
             }
+        }
+        @media (max-width: 350px) {
+            .mobile-announcement-text { display: none !important; }
         }
 
         /* -------------------------------------------------------------
@@ -444,151 +477,251 @@
         }
 
         /* -------------------------------------------------------------
-           MOBILE HEADER (<768px) — UNTOUCHED & IDENTICAL
+           MOBILE HEADER (<768px) — ONE COMPACT 56px ROW
            ------------------------------------------------------------- */
         @media (max-width: 767px) {
-            .desktop-header-wrap {
-                display: none !important;
+            .site-header {
+                height: 56px !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                position: sticky !important;
+                top: 0 !important;
+                z-index: 50 !important;
+                background: #FFFFFF !important;
+                border-bottom: 1px solid #E5E5E0 !important;
+                box-shadow: none !important;
+                box-sizing: border-box !important;
             }
             .mobile-header-wrap {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                height: 56px !important;
+                padding: 0 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                margin: 0 !important;
+            }
+            .mobile-logo-link {
+                display: inline-flex !important;
+                align-items: center !important;
+                height: 100% !important;
+                text-decoration: none !important;
+                flex-shrink: 0 !important;
+            }
+            .mobile-logo-img {
+                height: 30px !important;
+                max-height: 32px !important;
+                min-height: 28px !important;
+                width: auto !important;
                 display: block !important;
-                padding: 16px 0 14px 0;
+                object-fit: contain !important;
+            }
+            .mobile-hamburger-btn {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                min-height: 44px !important;
+                background: transparent !important;
+                border: none !important;
+                cursor: pointer !important;
+                padding: 0 !important;
+                color: #111111 !important;
+                border-radius: 4px !important;
+                flex-shrink: 0 !important;
+            }
+            .mobile-drawer-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 9998;
+            }
+            .mobile-drawer {
+                position: fixed;
+                top: 56px;
+                left: 0;
+                right: 0;
+                width: 100%;
+                max-height: calc(100vh - 56px);
+                background: #FFFFFF;
+                border-bottom: 1px solid #E5E5E0;
+                z-index: 9999;
+                padding: 16px 20px 28px 20px;
+                box-sizing: border-box;
+                display: none;
+                flex-direction: column;
+                overflow-y: auto;
+                box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            }
+            .mobile-drawer.open {
+                display: flex !important;
+            }
+            .mobile-search-input {
+                width: 100%;
+                height: 44px;
+                padding: 0 14px;
+                font-family: var(--font-ui);
+                font-size: 14px;
+                border: 1px solid #E5E5E0;
+                border-radius: 2px;
+                outline: none;
+                box-sizing: border-box;
+                background: #FAFAF7;
+            }
+            .mobile-nav-list {
+                display: flex;
+                flex-direction: column;
+                margin: 0;
+                padding: 0;
+            }
+            .mobile-nav-item {
+                height: 48px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                font-family: var(--font-ui);
+                font-size: 16px;
+                font-weight: 600;
+                color: #111111;
+                border-bottom: 1px solid #EBEBE6;
+                text-decoration: none;
+                padding: 0 4px;
+                transition: color 0.15s ease;
+            }
+            .mobile-nav-item:hover,
+            .mobile-nav-item.active {
+                color: #B3261E;
+            }
+            .mobile-drawer-divider {
+                height: 1px;
+                background: #E5E5E0;
+                margin: 16px 0;
+                width: 100%;
+            }
+            .mobile-drawer-bottom {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+            .mobile-drawer-lang {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                height: 44px;
+                padding: 0 4px;
+            }
+            .mobile-lang-btn-group {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+            }
+            .mobile-lang-btn {
+                height: 44px;
+                min-width: 44px;
+                padding: 0 10px;
+                background: transparent;
+                border: none;
+                font-family: var(--font-ui);
+                font-size: 15px;
+                font-weight: 600;
+                color: #555555;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .mobile-lang-btn.active {
+                color: #B3261E !important;
+                font-weight: 700 !important;
+            }
+            .mobile-lang-sep {
+                color: #CCCCCC;
+                font-size: 13px;
+            }
+            .mobile-drawer-whatsapp {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                height: 44px;
+                min-height: 44px;
+                padding: 0 14px;
+                background: #F0FDF4;
+                border: 1px solid #BBF7D0;
+                border-radius: 2px;
+                color: #166534 !important;
+                font-family: var(--font-ui);
+                font-size: 14.5px;
+                font-weight: 600;
+                text-decoration: none;
+                box-sizing: border-box;
+            }
+            .mobile-drawer-claim-btn {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 44px;
+                min-height: 44px;
+                background: #B3261E;
+                color: #FFFFFF !important;
+                border: 1px solid #B3261E;
+                border-radius: 2px;
+                font-family: var(--font-ui);
+                font-size: 15px;
+                font-weight: 600;
+                text-decoration: none;
+                box-sizing: border-box;
             }
         }
 
-        .mobile-header-wrap .header-top {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
+        /* Tablet Drawer (768px - 1023px) */
+        @media (min-width: 768px) and (max-width: 1023px) {
+            .mobile-drawer-overlay {
+                display: none;
+                position: fixed;
+                top: 0; left: 0; right: 0; bottom: 0;
+                background: rgba(0, 0, 0, 0.45);
+                z-index: 9998;
+            }
+            .mobile-drawer {
+                position: fixed;
+                top: 0;
+                right: -300px;
+                width: 300px;
+                height: 100%;
+                background: #FFFFFF;
+                border-left: 1px solid #E5E5E0;
+                z-index: 9999;
+                padding: 24px;
+                box-sizing: border-box;
+                transition: right 0.25s ease;
+                display: flex;
+                flex-direction: column;
+                overflow-y: auto;
+            }
+            .mobile-drawer.open {
+                right: 0 !important;
+            }
+            .mobile-nav-item {
+                height: 44px;
+                display: flex;
+                align-items: center;
+                font-family: var(--font-ui);
+                font-size: 15px;
+                font-weight: 600;
+                color: #111;
+                border-bottom: 1px solid #EBEBE6;
+                text-decoration: none;
+            }
         }
 
-        .mobile-header-wrap .site-branding {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-        }
-
-        .mobile-header-wrap .site-logo-img {
-            max-height: 85px !important;
-            width: auto !important;
-            display: block !important;
-            margin: 0 auto !important;
-            object-fit: contain !important;
-        }
-
-        .mobile-header-wrap .site-tagline {
-            font-family: var(--font-ui) !important;
-            font-size: 13px !important;
-            color: #4B5563 !important;
-            margin-top: 8px !important;
-            line-height: 1.45 !important;
-            max-width: 320px !important;
-            text-align: center !important;
-        }
-
-        .mobile-header-wrap .header-controls-row {
-            display: flex !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-            width: 100% !important;
-            margin-top: 24px !important;
-            padding-top: 14px !important;
-            border-top: 1px solid #E5E7EB !important;
-            box-sizing: border-box !important;
-        }
-
-        .mobile-header-wrap .lang-pill-wrap {
-            display: inline-flex !important;
-            align-items: center !important;
-            background: #F3F4F6 !important;
-            border: 1px solid #E5E7EB !important;
-            border-radius: 6px !important;
-            padding: 2px !important;
-        }
-
-        .mobile-header-wrap .lang-pill {
-            background: transparent !important;
-            border: none !important;
-            padding: 4px 11px !important;
-            border-radius: 4px !important;
-            font-family: var(--font-ui) !important;
-            font-size: 13px !important;
-            font-weight: 700 !important;
-            color: #4B5563 !important;
-            cursor: pointer !important;
-            transition: all 0.15s ease !important;
-        }
-
-        .mobile-header-wrap .lang-pill.active {
-            background: #FFFFFF !important;
-            color: #DC2626 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.08) !important;
-        }
-
-        .mobile-header-wrap .lang-pill-divider {
-            width: 1px;
-            height: 14px;
-            background: #E5E7EB;
-            margin: 0 1px;
-        }
-
-        .mobile-header-wrap .whatsapp-icon-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 32px !important;
-            height: 32px !important;
-            color: #25D366 !important;
-            text-decoration: none !important;
-            flex-shrink: 0 !important;
-            background: transparent !important;
-        }
-
-        .mobile-header-wrap .mobile-toggle-btn {
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            width: 40px !important;
-            height: 40px !important;
-            background: #FFFFFF !important;
-            border: 1px solid #D1D5DB !important;
-            border-radius: 6px !important;
-            cursor: pointer !important;
-            padding: 0 !important;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04) !important;
-        }
-
-        /* Mobile Drawer */
-        .mobile-drawer-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.5);
-            z-index: 9998;
-        }
-        .mobile-drawer {
-            position: fixed;
-            top: 0; right: -280px;
-            width: 280px; height: 100%;
-            background: #FAFAF7;
-            border-left: 1px solid var(--border-rule);
-            z-index: 9999;
-            padding: 24px;
-            box-sizing: border-box;
-            transition: right 0.25s ease-in-out;
-            display: flex; flex-direction: column; gap: 16px;
-            overflow-y: auto;
-        }
-        .mobile-drawer.open { right: 0; }
-        .mobile-drawer a {
-            font-family: var(--font-ui);
-            font-size: 15px; font-weight: 600;
-            padding: 8px 0; border-bottom: 1px solid #EBEBE6;
-            color: var(--text-dark);
+        @media (min-width: 1024px) {
+            .mobile-drawer, .mobile-drawer-overlay {
+                display: none !important;
+            }
         }
 
         /* Main Content */
@@ -685,9 +818,10 @@
         <div id="topAnnouncementBar" class="top-announcement">
             <div class="top-announcement-inner">
                 <div class="top-announcement-text">
-                    {{ $settings->announcement_text_bn }}
+                    <span class="desktop-announcement-text">{{ $settings->announcement_text_bn }}</span>
+                    <span class="mobile-announcement-text">{{ Str::limit($settings->announcement_text_bn, 36, '...') }}</span>
                     @if(!empty($settings->announcement_link))
-                        <a href="{{ $settings->announcement_link }}">{{ $settings->announcement_link_text_bn ?? 'বিস্তারিত' }} &rarr;</a>
+                        <a href="{{ $settings->announcement_link }}">{{ $settings->announcement_link_text_bn ?? 'দাবি পাঠান' }} &rarr;</a>
                     @endif
                 </div>
                 <button type="button" class="top-announcement-close" onclick="dismissAnnouncement()" aria-label="Dismiss Notice">&times;</button>
@@ -755,71 +889,71 @@
             </div>
         </div>
 
-        <!-- MOBILE HEADER (<768px) — UNTOUCHED & IDENTICAL -->
+        <!-- MOBILE HEADER (<768px) — ONE COMPACT 56px ROW -->
         <div class="mobile-header-wrap">
-            <div class="site-wrap">
-                <div class="header-top">
-                    <!-- Branding Logo Centered -->
-                    <div class="site-branding">
-                        <a href="/"><img src="{{ !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="site-logo-img"></a>
-                        <div class="site-tagline">Independent Fact-Checking & Digital Verification<br>Initiative in Bangladesh</div>
-                    </div>
+            <!-- Left: Logo (height 28-32px, auto width) -->
+            <a href="/" class="mobile-logo-link" title="{{ $siteName }}">
+                <img src="{{ !empty($settings->logo_light) ? asset('storage/' . $settings->logo_light) : asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="mobile-logo-img">
+            </a>
 
-                    <!-- Controls Row: Left (Lang + WhatsApp), Right (Hamburger) -->
-                    <div class="header-controls-row">
-                        <!-- Left: Language Pill & WhatsApp -->
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <div class="lang-pill-wrap notranslate" translate="no" title="Switch Language / ভাষা পরিবর্তন">
-                                <button type="button" id="btn-lang-bn" onclick="switchSiteLanguage('bn')" class="lang-pill">বাংলা</button>
-                                <span class="lang-pill-divider"></span>
-                                <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
-                            </div>
-
-                            <!-- WhatsApp Icon (FontAwesome Official) -->
-                            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn notranslate" title="WhatsApp Tipline" style="display: inline-flex; align-items: center; justify-content: center; text-decoration: none;">
-                                <i class="fa-brands fa-whatsapp" style="color: rgb(10, 113, 4); font-size: 27px; line-height: 1;"></i>
-                            </a>
-                        </div>
-
-                        <!-- Right: Hamburger Menu Button (Clean 3-bar box) -->
-                        <button type="button" class="mobile-toggle-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="4" y1="6" x2="20" y2="6"></line>
-                                <line x1="4" y1="12" x2="20" y2="12"></line>
-                                <line x1="4" y1="18" x2="20" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <!-- Right: Hamburger Menu Button (44x44 tap target, aria-label, aria-expanded) -->
+            <button type="button" class="mobile-hamburger-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation Menu" aria-expanded="false" id="mobileMenuButton">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111827" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="4" y1="6" x2="20" y2="6"></line>
+                    <line x1="4" y1="12" x2="20" y2="12"></line>
+                    <line x1="4" y1="18" x2="20" y2="18"></line>
+                </svg>
+            </button>
         </div>
     </header>
 
 
-    <!-- Mobile Navigation Drawer -->
+    <!-- Mobile Navigation Panel (Full-Width under header) -->
     <div id="drawerOverlay" class="mobile-drawer-overlay" onclick="toggleDrawer()"></div>
-    <div id="mobileDrawer" class="mobile-drawer">
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-rule); padding-bottom: 12px;">
-            <span style="font-weight: 700; font-size: 16px;">মেনু</span>
-            <button type="button" onclick="toggleDrawer()" style="background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
-        </div>
-
-        <form action="/search" method="GET" style="margin: 8px 0;">
-            <input type="text" name="q" placeholder="অনুসন্ধান করুন..." class="search-input" style="width: 100%; box-sizing: border-box;" value="{{ request('q') }}">
+    <div id="mobileDrawer" class="mobile-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation">
+        <!-- Search Input -->
+        <form action="/search" method="GET" style="margin: 0 0 14px 0;">
+            <input type="text" name="q" placeholder="অনুসন্ধান করুন..." class="mobile-search-input" value="{{ request('q') }}">
         </form>
 
-        @if(!empty($settings->header_menu))
-            @foreach($settings->header_menu as $menu)
-                <a href="{{ $menu['url'] }}">{{ $menu['label_bn'] }}</a>
-            @endforeach
-        @else
-            <a href="/">হোম</a>
-            <a href="/category/politics">রাজনীতি</a>
-            <a href="/category/health">স্বাস্থ্য</a>
-            <a href="/category/ai-deepfake">ডিপফেক ও এআই</a>
-            <a href="/page/about">আমাদের সম্পর্কে</a>
-        @endif
-        <a href="/submit-claim" style="color: var(--accent-red); font-weight: 700;">দাবি পাঠান (Tipline)</a>
+        <!-- Nav Links Stacked (each 48px tall, 16px font, 1px bottom border) -->
+        <nav class="mobile-nav-list">
+            @if(!empty($settings->header_menu))
+                @foreach($settings->header_menu as $menu)
+                    <a href="{{ $menu['url'] }}" onclick="toggleDrawer()" class="mobile-nav-item {{ request()->is(ltrim($menu['url'], '/') . '*') ? 'active' : '' }}">{{ $menu['label_bn'] }}</a>
+                @endforeach
+            @else
+                <a href="/" onclick="toggleDrawer()" class="mobile-nav-item {{ request()->is('/') ? 'active' : '' }}">হোম</a>
+                <a href="/category/politics" onclick="toggleDrawer()" class="mobile-nav-item {{ request()->is('category/politics*') ? 'active' : '' }}">রাজনীতি</a>
+                <a href="/category/health" onclick="toggleDrawer()" class="mobile-nav-item {{ request()->is('category/health*') ? 'active' : '' }}">স্বাস্থ্য</a>
+                <a href="/category/ai-deepfake" onclick="toggleDrawer()" class="mobile-nav-item {{ request()->is('category/ai-deepfake*') ? 'active' : '' }}">ডিপফেক ও এআই</a>
+                <a href="/page/about" onclick="toggleDrawer()" class="mobile-nav-item {{ request()->is('page/about*') ? 'active' : '' }}">আমাদের সম্পর্কে</a>
+            @endif
+        </nav>
+
+        <!-- 1px Divider -->
+        <div class="mobile-drawer-divider"></div>
+
+        <!-- Language toggle, WhatsApp and "দাবি পাঠান" button -->
+        <div class="mobile-drawer-bottom">
+            <div class="mobile-drawer-lang notranslate" translate="no">
+                <span style="font-size: 14.5px; color: #4B5563; font-weight: 600;">ভাষা পরিবর্তন:</span>
+                <div class="mobile-lang-btn-group">
+                    <button type="button" id="btn-lang-bn" onclick="switchSiteLanguage('bn')" class="mobile-lang-btn active">বাংলা</button>
+                    <span class="mobile-lang-sep">|</span>
+                    <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="mobile-lang-btn">ENG</button>
+                </div>
+            </div>
+
+            <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="mobile-drawer-whatsapp notranslate" title="WhatsApp Tipline">
+                <i class="fa-brands fa-whatsapp" style="color: #25D366; font-size: 22px;"></i>
+                <span>হোয়াটসঅ্যাপ টিপলাইন (WhatsApp)</span>
+            </a>
+
+            <a href="/submit-claim" onclick="toggleDrawer()" class="mobile-drawer-claim-btn notranslate">
+                দাবি পাঠান (Submit Claim) &rarr;
+            </a>
+        </div>
     </div>
 
     <!-- Main Content -->
@@ -1018,11 +1152,10 @@
             }
         }, { passive: true });
 
-        // Announcement dismissal via sessionStorage (reappears next browser session)
+        // Announcement dismissal (remembers dismissal in localStorage / sessionStorage)
         function checkAnnouncementDismissal() {
             try {
-                localStorage.removeItem('fc_announcement_dismissed'); // clear permanent legacy key
-                if (sessionStorage.getItem('fc_announcement_dismissed') === '1') {
+                if (localStorage.getItem('fc_announcement_dismissed') === '1' || sessionStorage.getItem('fc_announcement_dismissed') === '1') {
                     var el = document.getElementById('topAnnouncementBar');
                     if (el) el.classList.add('dismissed');
                 }
@@ -1032,6 +1165,7 @@
             var el = document.getElementById('topAnnouncementBar');
             if (el) el.classList.add('dismissed');
             try {
+                localStorage.setItem('fc_announcement_dismissed', '1');
                 sessionStorage.setItem('fc_announcement_dismissed', '1');
             } catch (e) {}
         }
@@ -1055,21 +1189,27 @@
                 form.classList.remove('open');
             }
         });
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-    <script>
+        // Mobile / Tablet Navigation Panel Toggle
         function toggleDrawer() {
-            const drawer = document.getElementById('mobileDrawer');
-            const overlay = document.getElementById('drawerOverlay');
-            if (drawer.classList.contains('open')) {
+            var drawer = document.getElementById('mobileDrawer');
+            var overlay = document.getElementById('drawerOverlay');
+            var btn = document.getElementById('mobileMenuButton');
+            if (!drawer) return;
+            var isOpen = drawer.classList.contains('open');
+            if (isOpen) {
                 drawer.classList.remove('open');
-                overlay.style.display = 'none';
+                if (overlay) overlay.style.display = 'none';
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
             } else {
                 drawer.classList.add('open');
-                overlay.style.display = 'block';
+                if (overlay) overlay.style.display = 'block';
+                if (btn) btn.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
             }
         }
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
