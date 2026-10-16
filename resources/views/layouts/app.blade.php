@@ -300,7 +300,128 @@
                 gap: 32px !important;
             }
         }
-    </style>
+    
+        /* EXACT SCREENSHOT HEADER MATCH */
+        .site-header {
+            background: #FFFFFF !important;
+            padding: 16px 0 14px 0 !important;
+            border-bottom: 1px solid #E5E7EB !important;
+        }
+
+        .header-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .site-branding {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .site-logo-img {
+            max-height: 48px !important;
+            width: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+            object-fit: contain !important;
+        }
+
+        .site-tagline {
+            font-family: var(--font-ui) !important;
+            font-size: 13px !important;
+            color: #4B5563 !important;
+            margin-top: 8px !important;
+            line-height: 1.45 !important;
+            max-width: 320px !important;
+            text-align: center !important;
+        }
+
+        /* Controls row directly under tagline */
+        .header-controls-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            margin-top: 18px !important;
+            padding: 0 4px !important;
+        }
+
+        /* Segmented Pill Language Switcher */
+        .lang-pill-wrap {
+            display: inline-flex !important;
+            align-items: center !important;
+            background: #F3F4F6 !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 6px !important;
+            padding: 2px !important;
+        }
+
+        .lang-pill {
+            background: transparent !important;
+            border: none !important;
+            padding: 4px 10px !important;
+            border-radius: 4px !important;
+            font-family: var(--font-ui) !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            color: #4B5563 !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+        }
+
+        .lang-pill.active {
+            background: #FFFFFF !important;
+            color: #DC2626 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
+        }
+
+        .lang-pill-divider {
+            width: 1px;
+            height: 14px;
+            background: #E5E7EB;
+            margin: 0 1px;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-icon-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 32px !important;
+            height: 32px !important;
+            color: #25D366 !important;
+            text-decoration: none !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Mobile Hamburger Toggle */
+        .mobile-toggle-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            padding: 0 !important;
+            color: #111827 !important;
+        }
+
+        @media (min-width: 992px) {
+            .mobile-toggle-btn {
+                display: none !important;
+            }
+        }
+
+</style>
 
     
     <!-- Google Translate Integration -->
@@ -314,7 +435,128 @@
         .goog-tooltip, .goog-tooltip:hover { display: none !important; }
         .goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
         #google_translate_element, .skiptranslate { display: none !important; }
-    </style>
+    
+        /* EXACT SCREENSHOT HEADER MATCH */
+        .site-header {
+            background: #FFFFFF !important;
+            padding: 16px 0 14px 0 !important;
+            border-bottom: 1px solid #E5E7EB !important;
+        }
+
+        .header-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .site-branding {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .site-logo-img {
+            max-height: 48px !important;
+            width: auto !important;
+            display: block !important;
+            margin: 0 auto !important;
+            object-fit: contain !important;
+        }
+
+        .site-tagline {
+            font-family: var(--font-ui) !important;
+            font-size: 13px !important;
+            color: #4B5563 !important;
+            margin-top: 8px !important;
+            line-height: 1.45 !important;
+            max-width: 320px !important;
+            text-align: center !important;
+        }
+
+        /* Controls row directly under tagline */
+        .header-controls-row {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            width: 100% !important;
+            margin-top: 18px !important;
+            padding: 0 4px !important;
+        }
+
+        /* Segmented Pill Language Switcher */
+        .lang-pill-wrap {
+            display: inline-flex !important;
+            align-items: center !important;
+            background: #F3F4F6 !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 6px !important;
+            padding: 2px !important;
+        }
+
+        .lang-pill {
+            background: transparent !important;
+            border: none !important;
+            padding: 4px 10px !important;
+            border-radius: 4px !important;
+            font-family: var(--font-ui) !important;
+            font-size: 12.5px !important;
+            font-weight: 700 !important;
+            color: #4B5563 !important;
+            cursor: pointer !important;
+            transition: all 0.15s ease !important;
+        }
+
+        .lang-pill.active {
+            background: #FFFFFF !important;
+            color: #DC2626 !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.06) !important;
+        }
+
+        .lang-pill-divider {
+            width: 1px;
+            height: 14px;
+            background: #E5E7EB;
+            margin: 0 1px;
+        }
+
+        /* WhatsApp Button */
+        .whatsapp-icon-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 32px !important;
+            height: 32px !important;
+            color: #25D366 !important;
+            text-decoration: none !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Mobile Hamburger Toggle */
+        .mobile-toggle-btn {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            background: #FFFFFF !important;
+            border: 1px solid #E5E7EB !important;
+            border-radius: 6px !important;
+            cursor: pointer !important;
+            padding: 0 !important;
+            color: #111827 !important;
+        }
+
+        @media (min-width: 992px) {
+            .mobile-toggle-btn {
+                display: none !important;
+            }
+        }
+
+</style>
     <div id="google_translate_element" style="display:none;"></div>
     <script type="text/javascript">
         function googleTranslateElementInit() {
@@ -400,30 +642,32 @@
     <header class="site-header">
         <div class="site-wrap">
             <div class="header-top">
-                <!-- Branding Logo (Left-aligned & large) -->
+                <!-- Branding Logo Centered -->
                 <div class="site-branding">
                     <a href="/"><img src="{{ asset('storage/branding/logo.png') }}" alt="{{ $siteName }}" class="site-logo-img"></a>
-                    <div class="site-tagline">{{ $tagline }}</div>
+                    <div class="site-tagline">Independent Fact-Checking & Digital Verification<br>Initiative in Bangladesh</div>
                 </div>
 
-                <!-- Controls Row on Mobile (Left: Lang & WhatsApp, Right: Hamburger) -->
+                <!-- Controls Row: Left (Lang + WhatsApp), Right (Hamburger) -->
                 <div class="header-controls-row">
-                    <!-- Left: Language Switcher & WhatsApp -->
-                    <div style="display: flex; align-items: center; gap: 10px;">
+                    <!-- Left: Language Pill & WhatsApp -->
+                    <div style="display: flex; align-items: center; gap: 12px;">
                         <div class="lang-pill-wrap" title="Switch Language / ভাষা পরিবর্তন">
                             <button type="button" id="btn-lang-bn" onclick="switchSiteLanguage('bn')" class="lang-pill">বাংলা</button>
-                            <span style="color: #bbb; font-size: 11px;">/</span>
+                            <span class="lang-pill-divider"></span>
                             <button type="button" id="btn-lang-en" onclick="switchSiteLanguage('en')" class="lang-pill">ENG</button>
                         </div>
 
-                        <!-- WhatsApp Tipline -->
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #25D366; color: #FFF; border-radius: 4px; text-decoration: none;" title="WhatsApp Tipline">
-                            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.57 20.16 9.12 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16Z"/></svg>
+                        <!-- WhatsApp Icon (Clean outline SVG) -->
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp_number ?? '8801700000000') }}" target="_blank" rel="noopener" class="whatsapp-icon-btn" title="WhatsApp Tipline">
+                            <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2ZM12.05 20.16C10.57 20.16 9.12 19.76 7.85 19.01L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.8 13.47 3.8 11.91C3.8 7.37 7.5 3.67 12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.16 12.05 20.16Z"/></svg>
                         </a>
                     </div>
 
-                    <!-- Right: Mobile Drawer Toggle Button -->
-                    <button type="button" class="mobile-toggle-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">☰</button>
+                    <!-- Right: Hamburger Menu Button (Clean 3-bar box) -->
+                    <button type="button" class="mobile-toggle-btn" onclick="toggleDrawer()" aria-label="Toggle Navigation">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                    </button>
                 </div>
             </div>
 
